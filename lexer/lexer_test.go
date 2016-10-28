@@ -13,6 +13,9 @@ func TestNextToken(t *testing.T) {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
+		{token.PUBLIC, "public"},
+		{token.PRIVATE, "private"},
+		{token.PROTECTED, "protected"},
 		{token.FUNCTION, "function"},
 		{token.IDENT, "foo"},
 		{token.LPAREN, "("},

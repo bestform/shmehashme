@@ -31,13 +31,19 @@ const (
 	RBRACE = "}"
 
 	// Keywords
-	FUNCTION = "function"
-	RETURN   = "return"
+	FUNCTION  = "function"
+	RETURN    = "return"
+	PUBLIC    = "public"
+	PRIVATE   = "private"
+	PROTECTED = "protected"
 )
 
 var keywords = map[string]TokenType{
-	"function": FUNCTION,
-	"return":   RETURN,
+	"function":  FUNCTION,
+	"return":    RETURN,
+	"public":    PUBLIC,
+	"private":   PRIVATE,
+	"protected": PROTECTED,
 }
 
 // LookupIdent will search for possible keywords and return the

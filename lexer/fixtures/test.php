@@ -1,4 +1,4 @@
-function foo($bar, $baz)
+public private protected function foo($bar, $baz)
 	{
     	return $bar + $baz;
 	}
