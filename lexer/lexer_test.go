@@ -1,8 +1,9 @@
 package lexer
 
 import (
-	"shmehashme/token"
 	"testing"
+
+	"github.com/bestform/shmehashme/token"
 )
 
 func TestNextToken(t *testing.T) {

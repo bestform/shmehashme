@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"shmehashme/token"
+	"github.com/bestform/shmehashme/token"
 )
 
 // Lexer can lex PHP source code into tokens
