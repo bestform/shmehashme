@@ -13,9 +13,12 @@ func TestNextToken(t *testing.T) {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
+		{token.PHPTAG, "<?php"},
+		{token.CLASS, "class"},
+		{token.IDENT, "Foo"},
+		{token.LBRACE, "{"},
+
 		{token.PUBLIC, "public"},
-		{token.PRIVATE, "private"},
-		{token.PROTECTED, "protected"},
 		{token.FUNCTION, "function"},
 		{token.IDENT, "foo"},
 		{token.LPAREN, "("},
@@ -23,6 +26,7 @@ func TestNextToken(t *testing.T) {
 		{token.COMMA, ","},
 		{token.IDENT, "$baz"},
 		{token.RPAREN, ")"},
+
 		{token.LBRACE, "{"},
 		{token.RETURN, "return"},
 		{token.IDENT, "$bar"},
@@ -30,6 +34,25 @@ func TestNextToken(t *testing.T) {
 		{token.IDENT, "$baz"},
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
+
+		{token.PRIVATE, "private"},
+		{token.FUNCTION, "function"},
+		{token.IDENT, "bar"},
+		{token.LPAREN, "("},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.RBRACE, "}"},
+
+		{token.PROTECTED, "protected"},
+		{token.FUNCTION, "function"},
+		{token.IDENT, "baz"},
+		{token.LPAREN, "("},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.RBRACE, "}"},
+
+		{token.RBRACE, "}"},
+
 		{token.IDENT, "print"},
 		{token.LPAREN, "("},
 		{token.IDENT, "foo"},
@@ -56,8 +79,8 @@ func TestNextToken(t *testing.T) {
 	for i, tt := range tests {
 		tok := l.NextToken()
 		if tok.Type != tt.expectedType {
-			t.Fatalf("tests[%d] - tokenType wrong. expected=%q, got=%q",
-				i, tt.expectedType, tok.Type)
+			t.Fatalf("tests[%d] - tokenType wrong. expected=%q, got=%q (%v)",
+				i, tt.expectedType, tok.Type, tok.Literal)
 		}
 		if tok.Literal != tt.expectedLiteral {
 			t.Fatalf("tests[%d] - token literal wrong. expected=%q, got=%q",

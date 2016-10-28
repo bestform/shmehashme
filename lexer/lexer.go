@@ -78,6 +78,15 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Literal = l.readInteger()
 			return tok
 		}
+
+		if l.input[l.position:l.position+5] == "<?php" {
+			tok.Type = token.PHPTAG
+			tok.Literal = "<?php"
+			for _ = range tok.Literal {
+				l.readChar()
+			}
+			return tok
+		}
 		tok = newToken(token.ILLEGAL, l.ch)
 
 	}

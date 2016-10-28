@@ -36,6 +36,8 @@ const (
 	PUBLIC    = "public"
 	PRIVATE   = "private"
 	PROTECTED = "protected"
+	PHPTAG    = "<?php"
+	CLASS     = "class"
 )
 
 var keywords = map[string]TokenType{
@@ -44,6 +46,8 @@ var keywords = map[string]TokenType{
 	"public":    PUBLIC,
 	"private":   PRIVATE,
 	"protected": PROTECTED,
+	"<?php":     PHPTAG,
+	"class":     CLASS,
 }
 
 // LookupIdent will search for possible keywords and return the

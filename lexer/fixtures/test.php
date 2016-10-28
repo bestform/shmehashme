@@ -1,6 +1,13 @@
-public private protected function foo($bar, $baz)
-	{
-    	return $bar + $baz;
-	}
+<?php
 
-	print(foo(1, 2));
+class Foo {
+
+    public function foo($bar, $baz)
+    {
+        return $bar + $baz;
+    }
+    private function bar(){}
+    protected function baz(){}
+}
+
+print(foo(1, 2));
