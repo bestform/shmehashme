@@ -1,6 +1,9 @@
 package lexer
 
 import (
+	"bufio"
+	"io"
+
 	"github.com/bestform/shmehashme/token"
 )
 
@@ -13,11 +16,19 @@ type Lexer struct {
 }
 
 // New will return a pointer to a fresh lexer initialized with input
-func New(input string) *Lexer {
-	l := &Lexer{input: input}
+func New(input io.Reader) (*Lexer, error) {
+
+	reader := bufio.NewReader(input)
+	var delim byte
+	stringInput, err := reader.ReadString(delim)
+	if err != nil && err != io.EOF {
+		return nil, err
+	}
+
+	l := &Lexer{input: stringInput}
 	l.readChar()
 
-	return l
+	return l, nil
 }
 
 func (l *Lexer) readChar() {

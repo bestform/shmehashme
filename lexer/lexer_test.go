@@ -3,19 +3,12 @@ package lexer
 import (
 	"testing"
 
+	"os"
+
 	"github.com/bestform/shmehashme/token"
 )
 
 func TestNextToken(t *testing.T) {
-	input := `
-	function foo($bar, $baz)
-	{
-    	return $bar + $baz;
-	}
-
-	print(foo(1, 2));
-	`
-
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
@@ -46,8 +39,16 @@ func TestNextToken(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}
+	input, err := os.OpenFile("fixtures/test.php", os.O_RDONLY, 0666)
+	defer input.Close()
 
-	l := New(input)
+	if err != nil {
+		t.Fatal("error opening test fixture")
+	}
+	l, err := New(input)
+	if err != nil {
+		t.Fatal("error creating lexer", err)
+	}
 
 	for i, tt := range tests {
 		tok := l.NextToken()
