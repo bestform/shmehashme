@@ -41,6 +41,12 @@ func (l *Lexer) readChar() {
 	l.readPosition++
 }
 
+func (l *Lexer) advance(p int) {
+	for i := 0; i < p; i++ {
+		l.readChar()
+	}
+}
+
 // NextToken returns the next token and advances internally. At the end it will return token.EOF
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
@@ -49,6 +55,13 @@ func (l *Lexer) NextToken() token.Token {
 
 	switch l.ch {
 	case '=':
+		if l.input[l.position:l.position+3] == "===" {
+			tok.Type = token.IDENTITY
+			tok.Literal = "==="
+			l.advance(3)
+
+			return tok
+		}
 		tok = newToken(token.ASSIGN, l.ch)
 	case '+':
 		tok = newToken(token.PLUS, l.ch)

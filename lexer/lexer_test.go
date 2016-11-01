@@ -28,6 +28,21 @@ func TestNextToken(t *testing.T) {
 		{token.RPAREN, ")"},
 
 		{token.LBRACE, "{"},
+
+		// if
+		{token.IF, "if"},
+		{token.LPAREN, "("},
+		{token.TRUE, "true"},
+		{token.IDENTITY, "==="},
+		{token.FALSE, "false"},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.IDENT, "$baz"},
+		{token.ASSIGN, "="},
+		{token.INT, "10"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
+
 		{token.RETURN, "return"},
 		{token.IDENT, "$bar"},
 		{token.PLUS, "+"},

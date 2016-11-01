@@ -18,8 +18,9 @@ const (
 	INT   = "INT"   // 123456
 
 	// Operators
-	ASSIGN = "="
-	PLUS   = "+"
+	ASSIGN   = "="
+	PLUS     = "+"
+	IDENTITY = "==="
 
 	// Delimiters
 	COMMA     = ","
@@ -38,6 +39,9 @@ const (
 	PROTECTED = "protected"
 	PHPTAG    = "<?php"
 	CLASS     = "class"
+	IF        = "if"
+	TRUE      = "true"
+	FALSE     = "false"
 )
 
 var keywords = map[string]TokenType{
@@ -48,6 +52,9 @@ var keywords = map[string]TokenType{
 	"protected": PROTECTED,
 	"<?php":     PHPTAG,
 	"class":     CLASS,
+	"if":        IF,
+	"true":      TRUE,
+	"false":     FALSE,
 }
 
 // LookupIdent will search for possible keywords and return the
