@@ -20,7 +20,27 @@ type testsetup struct {
 
 var tests = []testsetup{
 	{
-		filename: "test.php",
+		filename: "fixtures/loopsAndConditions.php",
+		testcases: []testcase{
+			{token.PHPTAG, "<?php"},
+
+			// if
+			{token.IF, "if"},
+			{token.LPAREN, "("},
+			{token.TRUE, "true"},
+			{token.IDENTITY, "==="},
+			{token.FALSE, "false"},
+			{token.RPAREN, ")"},
+			{token.LBRACE, "{"},
+			{token.IDENT, "$baz"},
+			{token.ASSIGN, "="},
+			{token.INT, "10"},
+			{token.SEMICOLON, ";"},
+			{token.RBRACE, "}"},
+		},
+	},
+	{
+		filename: "fixtures/classStructure.php",
 		testcases: []testcase{
 			{token.PHPTAG, "<?php"},
 
@@ -42,20 +62,6 @@ var tests = []testsetup{
 			{token.RPAREN, ")"},
 
 			{token.LBRACE, "{"},
-
-			// if
-			{token.IF, "if"},
-			{token.LPAREN, "("},
-			{token.TRUE, "true"},
-			{token.IDENTITY, "==="},
-			{token.FALSE, "false"},
-			{token.RPAREN, ")"},
-			{token.LBRACE, "{"},
-			{token.IDENT, "$baz"},
-			{token.ASSIGN, "="},
-			{token.INT, "10"},
-			{token.SEMICOLON, ";"},
-			{token.RBRACE, "}"},
 
 			{token.RETURN, "return"},
 			{token.IDENT, "$bar"},
@@ -100,7 +106,7 @@ var tests = []testsetup{
 func TestNextToken(t *testing.T) {
 
 	for _, testcase := range tests {
-		input, err := os.OpenFile("fixtures/"+testcase.filename, os.O_RDONLY, 0666)
+		input, err := os.OpenFile(testcase.filename, os.O_RDONLY, 0666)
 		defer input.Close()
 		if err != nil {
 			t.Fatal("error opening test fixture")
