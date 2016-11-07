@@ -3,8 +3,6 @@ package lexer
 import (
 	"bufio"
 	"io"
-
-	"github.com/bestform/shmehashme/token"
 )
 
 // Lexer can lex PHP source code into tokens
@@ -51,9 +49,9 @@ func (l *Lexer) advance(p int) {
 	}
 }
 
-// NextToken returns the next token and advances internally. At the end it will return token.EOF
-func (l *Lexer) NextToken() token.Token {
-	var tok token.Token
+// NextToken returns the next token and advances internally. At the end it will return EOF
+func (l *Lexer) NextToken() Token {
+	var tok Token
 
 	l.skipWhitespace()
 
@@ -62,52 +60,52 @@ func (l *Lexer) NextToken() token.Token {
 	switch l.ch {
 	case '=':
 		if l.input[l.position:l.position+3] == "===" {
-			tok.Type = token.IDENTITY
+			tok.Type = IDENTITY
 			tok.Literal = "==="
 			l.advance(3)
 
 			return tok
 		}
-		tok = newToken(token.ASSIGN, l.ch, l.line)
+		tok = newToken(ASSIGN, l.ch, l.line)
 	case '+':
 		l.readChar()
 		if l.ch == '+' {
-			tok.Type = token.INC
+			tok.Type = INC
 			tok.Literal = "++"
 			l.readChar()
 			return tok
 		}
-		tok = newToken(token.PLUS, '+', l.line)
+		tok = newToken(PLUS, '+', l.line)
 		return tok
 	case ',':
-		tok = newToken(token.COMMA, l.ch, l.line)
+		tok = newToken(COMMA, l.ch, l.line)
 	case ';':
-		tok = newToken(token.SEMICOLON, l.ch, l.line)
+		tok = newToken(SEMICOLON, l.ch, l.line)
 	case '(':
-		tok = newToken(token.LPAREN, l.ch, l.line)
+		tok = newToken(LPAREN, l.ch, l.line)
 	case ')':
-		tok = newToken(token.RPAREN, l.ch, l.line)
+		tok = newToken(RPAREN, l.ch, l.line)
 	case '{':
-		tok = newToken(token.LBRACE, l.ch, l.line)
+		tok = newToken(LBRACE, l.ch, l.line)
 	case '}':
-		tok = newToken(token.RBRACE, l.ch, l.line)
+		tok = newToken(RBRACE, l.ch, l.line)
 	case 0:
-		tok.Type = token.EOF
+		tok.Type = EOF
 		tok.Literal = ""
 	default:
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
-			tok.Type = token.LookupIdent(tok.Literal)
+			tok.Type = LookupIdent(tok.Literal)
 			return tok
 		}
 		if isInt(l.ch) {
-			tok.Type = token.INT
+			tok.Type = INT
 			tok.Literal = l.readInteger()
 			return tok
 		}
 
 		if l.input[l.position:l.position+5] == "<?php" {
-			tok.Type = token.PHPTAG
+			tok.Type = PHPTAG
 			tok.Literal = "<?php"
 			for _ = range tok.Literal {
 				l.readChar()
@@ -115,12 +113,12 @@ func (l *Lexer) NextToken() token.Token {
 			return tok
 		}
 		if l.ch == '<' {
-			tok = newToken(token.LESSTHAN, l.ch, l.line)
+			tok = newToken(LESSTHAN, l.ch, l.line)
 			l.readChar()
 			return tok
 		}
 
-		tok = newToken(token.ILLEGAL, l.ch, l.line)
+		tok = newToken(ILLEGAL, l.ch, l.line)
 
 	}
 
@@ -165,6 +163,6 @@ func isBackslash(ch byte) bool {
 	return ch == '\\'
 }
 
-func newToken(t token.TokenType, l byte, line int) token.Token {
-	return token.Token{Type: t, Literal: string(l), Line: line}
+func newToken(t TokenType, l byte, line int) Token {
+	return Token{Type: t, Literal: string(l), Line: line}
 }

@@ -1,4 +1,4 @@
-package token
+package lexer
 
 // TokenType defines the type of a Token (see below)
 type TokenType string

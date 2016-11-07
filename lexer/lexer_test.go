@@ -6,12 +6,10 @@ import (
 	"os"
 
 	"strconv"
-
-	"github.com/bestform/shmehashme/token"
 )
 
 type testcase struct {
-	expectedType    token.TokenType
+	expectedType    TokenType
 	expectedLiteral string
 }
 
@@ -24,100 +22,100 @@ var tests = []testsetup{
 	{
 		filename: "fixtures/loopsAndConditions.php",
 		testcases: []testcase{
-			{token.PHPTAG, "<?php"},
+			{PHPTAG, "<?php"},
 
 			// if
-			{token.IF, "if"},
-			{token.LPAREN, "("},
-			{token.TRUE, "true"},
-			{token.IDENTITY, "==="},
-			{token.FALSE, "false"},
-			{token.RPAREN, ")"},
-			{token.LBRACE, "{"},
-			{token.IDENT, "$baz"},
-			{token.ASSIGN, "="},
-			{token.INT, "10"},
-			{token.SEMICOLON, ";"},
-			{token.RBRACE, "}"},
+			{IF, "if"},
+			{LPAREN, "("},
+			{TRUE, "true"},
+			{IDENTITY, "==="},
+			{FALSE, "false"},
+			{RPAREN, ")"},
+			{LBRACE, "{"},
+			{IDENT, "$baz"},
+			{ASSIGN, "="},
+			{INT, "10"},
+			{SEMICOLON, ";"},
+			{RBRACE, "}"},
 
 			// for
-			{token.FOR, "for"},
-			{token.LPAREN, "("},
-			{token.IDENT, "$i"},
-			{token.ASSIGN, "="},
-			{token.INT, "0"},
-			{token.SEMICOLON, ";"},
-			{token.IDENT, "$i"},
-			{token.LESSTHAN, "<"},
-			{token.INT, "10"},
-			{token.SEMICOLON, ";"},
-			{token.IDENT, "$i"},
-			{token.INC, "++"},
-			{token.RPAREN, ")"},
-			{token.LBRACE, "{"},
-			{token.RBRACE, "}"},
+			{FOR, "for"},
+			{LPAREN, "("},
+			{IDENT, "$i"},
+			{ASSIGN, "="},
+			{INT, "0"},
+			{SEMICOLON, ";"},
+			{IDENT, "$i"},
+			{LESSTHAN, "<"},
+			{INT, "10"},
+			{SEMICOLON, ";"},
+			{IDENT, "$i"},
+			{INC, "++"},
+			{RPAREN, ")"},
+			{LBRACE, "{"},
+			{RBRACE, "}"},
 		},
 	},
 	{
 		filename: "fixtures/classStructure.php",
 		testcases: []testcase{
-			{token.PHPTAG, "<?php"},
+			{PHPTAG, "<?php"},
 
-			{token.USE, "use"},
-			{token.IDENT, "Foo\\Bar"},
-			{token.SEMICOLON, ";"},
+			{USE, "use"},
+			{IDENT, "Foo\\Bar"},
+			{SEMICOLON, ";"},
 
-			{token.CLASS, "class"},
-			{token.IDENT, "Foo"},
-			{token.LBRACE, "{"},
+			{CLASS, "class"},
+			{IDENT, "Foo"},
+			{LBRACE, "{"},
 
-			{token.PUBLIC, "public"},
-			{token.FUNCTION, "function"},
-			{token.IDENT, "foo"},
-			{token.LPAREN, "("},
-			{token.IDENT, "$bar"},
-			{token.COMMA, ","},
-			{token.IDENT, "$baz"},
-			{token.RPAREN, ")"},
+			{PUBLIC, "public"},
+			{FUNCTION, "function"},
+			{IDENT, "foo"},
+			{LPAREN, "("},
+			{IDENT, "$bar"},
+			{COMMA, ","},
+			{IDENT, "$baz"},
+			{RPAREN, ")"},
 
-			{token.LBRACE, "{"},
+			{LBRACE, "{"},
 
-			{token.RETURN, "return"},
-			{token.IDENT, "$bar"},
-			{token.PLUS, "+"},
-			{token.IDENT, "$baz"},
-			{token.SEMICOLON, ";"},
-			{token.RBRACE, "}"},
+			{RETURN, "return"},
+			{IDENT, "$bar"},
+			{PLUS, "+"},
+			{IDENT, "$baz"},
+			{SEMICOLON, ";"},
+			{RBRACE, "}"},
 
-			{token.PRIVATE, "private"},
-			{token.FUNCTION, "function"},
-			{token.IDENT, "bar"},
-			{token.LPAREN, "("},
-			{token.RPAREN, ")"},
-			{token.LBRACE, "{"},
-			{token.RBRACE, "}"},
+			{PRIVATE, "private"},
+			{FUNCTION, "function"},
+			{IDENT, "bar"},
+			{LPAREN, "("},
+			{RPAREN, ")"},
+			{LBRACE, "{"},
+			{RBRACE, "}"},
 
-			{token.PROTECTED, "protected"},
-			{token.FUNCTION, "function"},
-			{token.IDENT, "baz"},
-			{token.LPAREN, "("},
-			{token.RPAREN, ")"},
-			{token.LBRACE, "{"},
-			{token.RBRACE, "}"},
+			{PROTECTED, "protected"},
+			{FUNCTION, "function"},
+			{IDENT, "baz"},
+			{LPAREN, "("},
+			{RPAREN, ")"},
+			{LBRACE, "{"},
+			{RBRACE, "}"},
 
-			{token.RBRACE, "}"},
+			{RBRACE, "}"},
 
-			{token.IDENT, "print"},
-			{token.LPAREN, "("},
-			{token.IDENT, "foo"},
-			{token.LPAREN, "("},
-			{token.INT, "1"},
-			{token.COMMA, ","},
-			{token.INT, "2"},
-			{token.RPAREN, ")"},
-			{token.RPAREN, ")"},
-			{token.SEMICOLON, ";"},
-			{token.EOF, ""},
+			{IDENT, "print"},
+			{LPAREN, "("},
+			{IDENT, "foo"},
+			{LPAREN, "("},
+			{INT, "1"},
+			{COMMA, ","},
+			{INT, "2"},
+			{RPAREN, ")"},
+			{RPAREN, ")"},
+			{SEMICOLON, ";"},
+			{EOF, ""},
 		},
 	},
 }
@@ -163,10 +161,10 @@ func TestLineSupport(t *testing.T) {
 		t.Fatal("error creating lexer", err)
 	}
 
-	var tok token.Token
-	for tok.Type != token.EOF {
+	var tok Token
+	for tok.Type != EOF {
 		tok = l.NextToken()
-		if tok.Type == token.INT {
+		if tok.Type == INT {
 			expectedLine, err := strconv.Atoi(tok.Literal)
 			if err != nil {
 				t.Fatal("error reading integer token")
