@@ -42,6 +42,7 @@ const (
 	IF        = "if"
 	TRUE      = "true"
 	FALSE     = "false"
+	USE       = "use"
 )
 
 var keywords = map[string]TokenType{
@@ -55,6 +56,7 @@ var keywords = map[string]TokenType{
 	"if":        IF,
 	"true":      TRUE,
 	"false":     FALSE,
+	"use":       USE,
 }
 
 // LookupIdent will search for possible keywords and return the

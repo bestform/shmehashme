@@ -14,6 +14,11 @@ func TestNextToken(t *testing.T) {
 		expectedLiteral string
 	}{
 		{token.PHPTAG, "<?php"},
+
+		{token.USE, "use"},
+		{token.IDENT, "Foo\\Bar"},
+		{token.SEMICOLON, ";"},
+
 		{token.CLASS, "class"},
 		{token.IDENT, "Foo"},
 		{token.LBRACE, "{"},

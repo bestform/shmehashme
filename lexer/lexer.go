@@ -111,7 +111,7 @@ func (l *Lexer) NextToken() token.Token {
 
 func (l *Lexer) readIdentifier() string {
 	position := l.position
-	for isLetter(l.ch) {
+	for isLetter(l.ch) || isBackslash(l.ch) {
 		l.readChar()
 	}
 
@@ -139,6 +139,10 @@ func isLetter(ch byte) bool {
 
 func isInt(ch byte) bool {
 	return ch >= '0' && ch <= '9'
+}
+
+func isBackslash(ch byte) bool {
+	return ch == '\\'
 }
 
 func newToken(t token.TokenType, l byte) token.Token {

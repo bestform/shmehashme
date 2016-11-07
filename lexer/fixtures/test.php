@@ -1,5 +1,7 @@
 <?php
 
+use Foo\Bar;
+
 class Foo {
 
     public function foo($bar, $baz)
