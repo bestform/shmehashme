@@ -21,6 +21,8 @@ const (
 	ASSIGN   = "="
 	PLUS     = "+"
 	IDENTITY = "==="
+	LESSTHAN = "<"
+	INC      = "++"
 
 	// Delimiters
 	COMMA     = ","
@@ -43,6 +45,7 @@ const (
 	TRUE      = "true"
 	FALSE     = "false"
 	USE       = "use"
+	FOR       = "for"
 )
 
 var keywords = map[string]TokenType{
@@ -57,6 +60,7 @@ var keywords = map[string]TokenType{
 	"true":      TRUE,
 	"false":     FALSE,
 	"use":       USE,
+	"for":       FOR,
 }
 
 // LookupIdent will search for possible keywords and return the

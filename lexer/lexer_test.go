@@ -37,6 +37,23 @@ var tests = []testsetup{
 			{token.INT, "10"},
 			{token.SEMICOLON, ";"},
 			{token.RBRACE, "}"},
+
+			// for
+			{token.FOR, "for"},
+			{token.LPAREN, "("},
+			{token.IDENT, "$i"},
+			{token.ASSIGN, "="},
+			{token.INT, "0"},
+			{token.SEMICOLON, ";"},
+			{token.IDENT, "$i"},
+			{token.LESSTHAN, "<"},
+			{token.INT, "10"},
+			{token.SEMICOLON, ";"},
+			{token.IDENT, "$i"},
+			{token.INC, "++"},
+			{token.RPAREN, ")"},
+			{token.LBRACE, "{"},
+			{token.RBRACE, "}"},
 		},
 	},
 	{
