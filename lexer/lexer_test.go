@@ -5,6 +5,8 @@ import (
 
 	"os"
 
+	"strconv"
+
 	"github.com/bestform/shmehashme/token"
 )
 
@@ -142,6 +144,35 @@ func TestNextToken(t *testing.T) {
 			if tok.Literal != tt.expectedLiteral {
 				t.Fatalf("tests[%d] - token literal wrong. expected=%q, got=%q",
 					i, tt.expectedLiteral, tok.Literal)
+			}
+		}
+	}
+
+}
+
+func TestLineSupport(t *testing.T) {
+
+	input, err := os.OpenFile("fixtures/lineNumbers.php", os.O_RDONLY, 0666)
+	defer input.Close()
+	if err != nil {
+		t.Fatal("Error reading fixture", err)
+	}
+
+	l, err := New(input)
+	if err != nil {
+		t.Fatal("error creating lexer", err)
+	}
+
+	var tok token.Token
+	for tok.Type != token.EOF {
+		tok = l.NextToken()
+		if tok.Type == token.INT {
+			expectedLine, err := strconv.Atoi(tok.Literal)
+			if err != nil {
+				t.Fatal("error reading integer token")
+			}
+			if tok.Line != expectedLine {
+				t.Fatalf("tests %v, expected line to be %v but got %v", tok, expectedLine, tok.Line)
 			}
 		}
 	}

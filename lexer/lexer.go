@@ -13,6 +13,7 @@ type Lexer struct {
 	position     int  // current position in input (points to current char)
 	readPosition int  // current reading position in input (after current char)
 	ch           byte // current char under examination
+	line         int  // current line in input
 }
 
 // New will return a pointer to a fresh lexer initialized with input
@@ -25,7 +26,7 @@ func New(input io.Reader) (*Lexer, error) {
 		return nil, err
 	}
 
-	l := &Lexer{input: stringInput}
+	l := &Lexer{input: stringInput, line: 1}
 	l.readChar()
 
 	return l, nil
@@ -36,6 +37,9 @@ func (l *Lexer) readChar() {
 		l.ch = 0
 	} else {
 		l.ch = l.input[l.readPosition]
+	}
+	if l.ch == '\n' {
+		l.line++
 	}
 	l.position = l.readPosition
 	l.readPosition++
@@ -53,6 +57,8 @@ func (l *Lexer) NextToken() token.Token {
 
 	l.skipWhitespace()
 
+	tok.Line = l.line
+
 	switch l.ch {
 	case '=':
 		if l.input[l.position:l.position+3] == "===" {
@@ -62,7 +68,7 @@ func (l *Lexer) NextToken() token.Token {
 
 			return tok
 		}
-		tok = newToken(token.ASSIGN, l.ch)
+		tok = newToken(token.ASSIGN, l.ch, l.line)
 	case '+':
 		l.readChar()
 		if l.ch == '+' {
@@ -71,20 +77,20 @@ func (l *Lexer) NextToken() token.Token {
 			l.readChar()
 			return tok
 		}
-		tok = newToken(token.PLUS, '+')
+		tok = newToken(token.PLUS, '+', l.line)
 		return tok
 	case ',':
-		tok = newToken(token.COMMA, l.ch)
+		tok = newToken(token.COMMA, l.ch, l.line)
 	case ';':
-		tok = newToken(token.SEMICOLON, l.ch)
+		tok = newToken(token.SEMICOLON, l.ch, l.line)
 	case '(':
-		tok = newToken(token.LPAREN, l.ch)
+		tok = newToken(token.LPAREN, l.ch, l.line)
 	case ')':
-		tok = newToken(token.RPAREN, l.ch)
+		tok = newToken(token.RPAREN, l.ch, l.line)
 	case '{':
-		tok = newToken(token.LBRACE, l.ch)
+		tok = newToken(token.LBRACE, l.ch, l.line)
 	case '}':
-		tok = newToken(token.RBRACE, l.ch)
+		tok = newToken(token.RBRACE, l.ch, l.line)
 	case 0:
 		tok.Type = token.EOF
 		tok.Literal = ""
@@ -109,12 +115,12 @@ func (l *Lexer) NextToken() token.Token {
 			return tok
 		}
 		if l.ch == '<' {
-			tok = newToken(token.LESSTHAN, l.ch)
+			tok = newToken(token.LESSTHAN, l.ch, l.line)
 			l.readChar()
 			return tok
 		}
 
-		tok = newToken(token.ILLEGAL, l.ch)
+		tok = newToken(token.ILLEGAL, l.ch, l.line)
 
 	}
 
@@ -159,6 +165,6 @@ func isBackslash(ch byte) bool {
 	return ch == '\\'
 }
 
-func newToken(t token.TokenType, l byte) token.Token {
-	return token.Token{Type: t, Literal: string(l)}
+func newToken(t token.TokenType, l byte, line int) token.Token {
+	return token.Token{Type: t, Literal: string(l), Line: line}
 }
