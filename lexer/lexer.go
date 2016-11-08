@@ -66,6 +66,13 @@ func (l *Lexer) NextToken() Token {
 
 			return tok
 		}
+		if l.input[l.position:l.position+2] == "==" {
+			tok.Type = EQUALS
+			tok.Literal = "=="
+			l.advance(2)
+
+			return tok
+		}
 		tok = newToken(ASSIGN, l.ch, l.line)
 	case '+':
 		l.readChar()
