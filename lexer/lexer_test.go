@@ -24,7 +24,21 @@ var tests = []testsetup{
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
 
-			// if
+			// if with equals check
+			{IF, "if"},
+			{LPAREN, "("},
+			{INT, "1337"},
+			{EQUALS, "=="},
+			{INT, "42"},
+			{RPAREN, ")"},
+			{LBRACE, "{"},
+			{IDENT, "$foo"},
+			{ASSIGN, "="},
+			{INT, "748"},
+			{SEMICOLON, ";"},
+			{RBRACE, "}"},
+
+			// if with identity check
 			{IF, "if"},
 			{LPAREN, "("},
 			{TRUE, "true"},

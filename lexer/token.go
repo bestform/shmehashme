@@ -21,6 +21,7 @@ const (
 	// Operators
 	ASSIGN   = "="
 	PLUS     = "+"
+	EQUALS   = "=="
 	IDENTITY = "==="
 	LESSTHAN = "<"
 	INC      = "++"
