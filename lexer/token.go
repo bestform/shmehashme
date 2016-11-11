@@ -11,42 +11,74 @@ type Token struct {
 }
 
 const (
+	// ILLEGAL represents a not character the lexer does not know
 	ILLEGAL = "ILLEGAL"
-	EOF     = "EOF"
+	// EOF indicates the end of the file
+	EOF = "EOF"
 
 	// Identifiers and literals
+
+	// IDENT represents all kinds of identifiers, like variables, function names, internal functions etc.
 	IDENT = "IDENT" // $foo, $bar, foo, print
-	INT   = "INT"   // 123456
+	// INT is an integer
+	INT = "INT" // 123456
 
 	// Operators
-	ASSIGN   = "="
-	PLUS     = "+"
-	EQUALS   = "=="
+
+	// ASSIGN is "="
+	ASSIGN = "="
+	// PLUS is "+""
+	PLUS = "+"
+	// EQUALS is "=="
+	EQUALS = "=="
+	// IDENTITY is "==="
 	IDENTITY = "==="
+	// LESSTHAN is "<"
 	LESSTHAN = "<"
-	INC      = "++"
+	// INC is "++" - used for both preinc and postinc. It is the job of the parser to differentiate
+	INC = "++"
 
 	// Delimiters
-	COMMA     = ","
+
+	// COMMA is ","
+	COMMA = ","
+	// SEMICOLON is ";"
 	SEMICOLON = ";"
-	LPAREN    = "("
-	RPAREN    = ")"
-	LBRACE    = "{"
-	RBRACE    = "}"
+	// LPAREN is "("
+	LPAREN = "("
+	// RPAREN is ")"
+	RPAREN = ")"
+	// LBRACE is "{"
+	LBRACE = "{"
+	// RBRACE is "}"
+	RBRACE = "}"
 
 	// Keywords
-	FUNCTION  = "function"
-	RETURN    = "return"
-	PUBLIC    = "public"
-	PRIVATE   = "private"
+
+	// FUNCTION is "function"
+	FUNCTION = "function"
+	// RETURN is "return"
+	RETURN = "return"
+	// PUBLIC is "public"
+	PUBLIC = "public"
+	// PRIVATE is "private"
+	PRIVATE = "private"
+	// PROTECTED is "protected"
 	PROTECTED = "protected"
-	PHPTAG    = "<?php"
-	CLASS     = "class"
-	IF        = "if"
-	TRUE      = "true"
-	FALSE     = "false"
-	USE       = "use"
-	FOR       = "for"
+	// PHPTAG is "<?php"
+	PHPTAG = "<?php"
+	// CLASS is "class"
+	CLASS = "class"
+	// IF is "if"
+	IF = "if"
+	// TRUE is "true"
+	TRUE = "true"
+	// FALSE is "false"
+	FALSE = "false"
+	// USE is "use"
+	USE = "use"
+	// FOR is "for"
+	FOR = "for"
 )
 
 var keywords = map[string]TokenType{
