@@ -1,11 +1,9 @@
 package lexer
 
 import (
-	"testing"
-
 	"os"
-
 	"strconv"
+	"testing"
 )
 
 type testcase struct {

@@ -114,7 +114,7 @@ func (l *Lexer) NextToken() Token {
 		if l.input[l.position:l.position+5] == "<?php" {
 			tok.Type = PHPTAG
 			tok.Literal = "<?php"
-			for _ = range tok.Literal {
+			for range tok.Literal {
 				l.readChar()
 			}
 			return tok
