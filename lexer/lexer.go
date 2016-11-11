@@ -52,13 +52,35 @@ func (l *Lexer) advance(p int) {
 // NextToken returns the next token and advances internally. At the end it will return EOF
 func (l *Lexer) NextToken() Token {
 	var tok Token
-
 	l.skipWhitespace()
-
 	tok.Line = l.line
 
-	switch l.ch {
-	case '=':
+	delimiterToken, ok := handleDelimiters(l)
+	if ok {
+		delimiterToken.Line = l.line
+		return delimiterToken
+	}
+
+	if l.ch == 0 {
+		tok.Type = EOF
+		tok.Literal = ""
+		l.readChar()
+		return tok
+	}
+
+	if l.ch == '+' {
+		l.readChar()
+		if l.ch == '+' {
+			tok.Type = INC
+			tok.Literal = "++"
+			l.readChar()
+			return tok
+		}
+		tok = newToken(PLUS, '+', l.line)
+		return tok
+	}
+
+	if l.ch == '=' {
 		if l.input[l.position:l.position+3] == "===" {
 			tok.Type = IDENTITY
 			tok.Literal = "==="
@@ -74,61 +96,38 @@ func (l *Lexer) NextToken() Token {
 			return tok
 		}
 		tok = newToken(ASSIGN, l.ch, l.line)
-	case '+':
 		l.readChar()
-		if l.ch == '+' {
-			tok.Type = INC
-			tok.Literal = "++"
-			l.readChar()
-			return tok
-		}
-		tok = newToken(PLUS, '+', l.line)
 		return tok
-	case ',':
-		tok = newToken(COMMA, l.ch, l.line)
-	case ';':
-		tok = newToken(SEMICOLON, l.ch, l.line)
-	case '(':
-		tok = newToken(LPAREN, l.ch, l.line)
-	case ')':
-		tok = newToken(RPAREN, l.ch, l.line)
-	case '{':
-		tok = newToken(LBRACE, l.ch, l.line)
-	case '}':
-		tok = newToken(RBRACE, l.ch, l.line)
-	case 0:
-		tok.Type = EOF
-		tok.Literal = ""
-	default:
-		if isLetter(l.ch) {
-			tok.Literal = l.readIdentifier()
-			tok.Type = LookupIdent(tok.Literal)
-			return tok
-		}
-		if isInt(l.ch) {
-			tok.Type = INT
-			tok.Literal = l.readInteger()
-			return tok
-		}
-
-		if l.input[l.position:l.position+5] == "<?php" {
-			tok.Type = PHPTAG
-			tok.Literal = "<?php"
-			for range tok.Literal {
-				l.readChar()
-			}
-			return tok
-		}
-		if l.ch == '<' {
-			tok = newToken(LESSTHAN, l.ch, l.line)
-			l.readChar()
-			return tok
-		}
-
-		tok = newToken(ILLEGAL, l.ch, l.line)
-
 	}
 
+	if isLetter(l.ch) {
+		tok.Literal = l.readIdentifier()
+		tok.Type = LookupIdent(tok.Literal)
+		return tok
+	}
+
+	if isInt(l.ch) {
+		tok.Type = INT
+		tok.Literal = l.readInteger()
+		return tok
+	}
+
+	if l.input[l.position:l.position+5] == "<?php" {
+		tok.Type = PHPTAG
+		tok.Literal = "<?php"
+		for range tok.Literal {
+			l.readChar()
+		}
+		return tok
+	}
+
+	if l.ch == '<' {
+		tok = newToken(LESSTHAN, l.ch, l.line)
+		l.readChar()
+		return tok
+	}
+
+	tok = newToken(ILLEGAL, l.ch, l.line)
 	l.readChar()
 
 	return tok
@@ -172,4 +171,29 @@ func isBackslash(ch byte) bool {
 
 func newToken(t TokenType, l byte, line int) Token {
 	return Token{Type: t, Literal: string(l), Line: line}
+}
+
+func handleDelimiters(l *Lexer) (Token, bool) {
+	c := l.ch
+	if l.ch == ',' {
+		l.readChar()
+		return newToken(COMMA, c, l.line), true
+	} else if l.ch == ';' {
+		l.readChar()
+		return newToken(SEMICOLON, c, l.line), true
+	} else if l.ch == '(' {
+		l.readChar()
+		return newToken(LPAREN, c, l.line), true
+	} else if l.ch == ')' {
+		l.readChar()
+		return newToken(RPAREN, c, l.line), true
+	} else if l.ch == '{' {
+		l.readChar()
+		return newToken(LBRACE, c, l.line), true
+	} else if l.ch == '}' {
+		l.readChar()
+		return newToken(RBRACE, c, l.line), true
+	}
+
+	return Token{}, false
 }
