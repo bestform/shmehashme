@@ -1,7 +1,7 @@
 SHMEHASHME
 ==========
 
-[![Build Status](https://travis-ci.org/bestform/shmehashme.svg?branch=master)](https://travis-ci.org/bestform/shmehashme) [![Go Report Card](https://goreportcard.com/badge/github.com/bestform/shmehashme)](https://goreportcard.com/report/github.com/bestform/shmehashme)
+[![Build Status](https://travis-ci.org/bestform/shmehashme.svg?branch=master)](https://travis-ci.org/bestform/shmehashme) [![Go Report Card](https://goreportcard.com/badge/github.com/bestform/shmehashme)](https://goreportcard.com/report/github.com/bestform/shmehashme) [![GoDoc](https://godoc.org/github.com/bestform/shmehashme?status.svg)](https://godoc.org/github.com/bestform/shmehashme)
 
 A new and simpler approach to a PHP lexer and parser written in go.
 
