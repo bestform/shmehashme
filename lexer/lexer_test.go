@@ -18,6 +18,17 @@ type testsetup struct {
 
 var tests = []testsetup{
 	{
+		filename: "fixtures/assignments.php",
+		testcases: []testcase{
+			{PHPTAG, "<?php"},
+
+			{IDENT, "$foo"},
+			{ASSIGN, "="},
+			{IDENT, "$bar"},
+			{SEMICOLON, ";"},
+		},
+	},
+	{
 		filename: "fixtures/loopsAndConditions.php",
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
@@ -30,10 +41,6 @@ var tests = []testsetup{
 			{INT, "42"},
 			{RPAREN, ")"},
 			{LBRACE, "{"},
-			{IDENT, "$foo"},
-			{ASSIGN, "="},
-			{INT, "748"},
-			{SEMICOLON, ";"},
 			{RBRACE, "}"},
 
 			// if with identity check
@@ -44,10 +51,6 @@ var tests = []testsetup{
 			{FALSE, "false"},
 			{RPAREN, ")"},
 			{LBRACE, "{"},
-			{IDENT, "$baz"},
-			{ASSIGN, "="},
-			{INT, "10"},
-			{SEMICOLON, ";"},
 			{RBRACE, "}"},
 
 			// for

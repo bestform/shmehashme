@@ -1,15 +1,9 @@
 <?php
 
-if (1337 == 42) {
-    $foo = 748;
-}
+if (1337 == 42) {}
 
-if (true === false) {
-    $baz = 10;
-}
+if (true === false) {}
 
-for($i = 0; $i < 10; $i++) {
-    
-}
+for($i = 0; $i < 10; $i++) {}
 
 foreach($i as $j => $k) {}
