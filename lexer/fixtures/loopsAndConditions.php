@@ -11,3 +11,5 @@ if (true === false) {
 for($i = 0; $i < 10; $i++) {
     
 }
+
+foreach($i as $j => $k) {}

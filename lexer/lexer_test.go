@@ -66,6 +66,18 @@ var tests = []testsetup{
 			{RPAREN, ")"},
 			{LBRACE, "{"},
 			{RBRACE, "}"},
+
+			// foreach
+			{FOREACH, "foreach"},
+			{LPAREN, "("},
+			{IDENT, "$i"},
+			{AS, "as"},
+			{IDENT, "$j"},
+			{ARROW, "=>"},
+			{IDENT, "$k"},
+			{RPAREN, ")"},
+			{LBRACE, "{"},
+			{RBRACE, "}"},
 		},
 	},
 	{

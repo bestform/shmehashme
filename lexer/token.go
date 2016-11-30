@@ -79,6 +79,12 @@ const (
 	USE = "use"
 	// FOR is "for"
 	FOR = "for"
+	// FOREACH is "foreach"
+	FOREACH = "foreach"
+	// AS is as as used in a foreach loop
+	AS = "as"
+	// ARROW is => as used in a foreach loop
+	ARROW = "=>"
 )
 
 var keywords = map[string]TokenType{
@@ -94,6 +100,9 @@ var keywords = map[string]TokenType{
 	"false":     FALSE,
 	"use":       USE,
 	"for":       FOR,
+	"foreach":   FOREACH,
+	"as":        AS,
+	"=>":        ARROW,
 }
 
 // LookupIdent will search for possible keywords and return the
