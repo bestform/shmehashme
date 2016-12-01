@@ -12,6 +12,7 @@ type Lexer struct {
 	readPosition int  // current reading position in input (after current char)
 	ch           byte // current char under examination
 	line         int  // current line in input
+	checkers     []checker
 }
 
 // New will return a pointer to a fresh lexer initialized with input
@@ -25,6 +26,16 @@ func New(input io.Reader) (*Lexer, error) {
 	}
 
 	l := &Lexer{input: stringInput, line: 1}
+	l.checkers = []checker{
+		delimiterChecker{},
+		eofChecker{},
+		plusChecker{},
+		equalsChecker{},
+		numberChecker{},
+		identifierChecker{},
+		phptagChecker{},
+		compareChecker{},
+	}
 	l.readChar()
 
 	return l, nil
@@ -51,117 +62,22 @@ func (l *Lexer) advance(p int) {
 
 // NextToken returns the next token and advances internally. At the end it will return EOF
 func (l *Lexer) NextToken() Token {
-	var tok Token
+
 	l.skipWhitespace()
+
+	for _, c := range l.checkers {
+		if tok, ok := c.Check(l); ok {
+			tok.Line = l.line
+			return tok
+		}
+	}
+
+	var tok Token
 	tok.Line = l.line
-
-	delimiterToken, ok := handleDelimiters(l)
-	if ok {
-		delimiterToken.Line = l.line
-		return delimiterToken
-	}
-
-	if l.ch == 0 {
-		tok.Type = EOF
-		tok.Literal = ""
-		l.readChar()
-		return tok
-	}
-
-	if l.ch == '+' {
-		l.readChar()
-		if l.ch == '+' {
-			tok.Type = INC
-			tok.Literal = "++"
-			l.readChar()
-			return tok
-		}
-		tok = newToken(PLUS, '+', l.line)
-		return tok
-	}
-
-	if l.ch == '=' {
-		if l.input[l.position:l.position+3] == "===" {
-			tok.Type = IDENTITY
-			tok.Literal = "==="
-			l.advance(3)
-
-			return tok
-		}
-		if l.input[l.position:l.position+2] == "==" {
-			tok.Type = EQUALS
-			tok.Literal = "=="
-			l.advance(2)
-
-			return tok
-		}
-		if l.input[l.position:l.position+2] == "=>" {
-			tok.Type = ARROW
-			tok.Literal = "=>"
-			l.advance(2)
-
-			return tok
-		}
-		if l.input[l.position:l.position+2] == "=&" {
-			tok.Type = REFERENCE
-			tok.Literal = "=&"
-			l.advance(2)
-			return tok
-		}
-		tok = newToken(ASSIGN, l.ch, l.line)
-		l.readChar()
-		return tok
-	}
-
-	if isLetter(l.ch) {
-		tok.Literal = l.readIdentifier()
-		tok.Type = LookupIdent(tok.Literal)
-		return tok
-	}
-
-	if isInt(l.ch) {
-		tok.Type = INT
-		tok.Literal = l.readInteger()
-		return tok
-	}
-
-	if l.input[l.position:l.position+5] == "<?php" {
-		tok.Type = PHPTAG
-		tok.Literal = "<?php"
-		for range tok.Literal {
-			l.readChar()
-		}
-		return tok
-	}
-
-	if l.ch == '<' {
-		tok = newToken(LESSTHAN, l.ch, l.line)
-		l.readChar()
-		return tok
-	}
-
 	tok = newToken(ILLEGAL, l.ch, l.line)
 	l.readChar()
 
 	return tok
-}
-
-func (l *Lexer) readIdentifier() string {
-	position := l.position
-	for isLetter(l.ch) || isBackslash(l.ch) {
-		l.readChar()
-	}
-
-	return l.input[position:l.position]
-}
-
-func (l *Lexer) readInteger() string {
-	position := l.position
-	for isInt(l.ch) {
-		l.readChar()
-	}
-
-	return l.input[position:l.position]
 }
 
 func (l *Lexer) skipWhitespace() {
@@ -170,43 +86,6 @@ func (l *Lexer) skipWhitespace() {
 	}
 }
 
-func isLetter(ch byte) bool {
-	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_' || ch == '$'
-}
-
-func isInt(ch byte) bool {
-	return ch >= '0' && ch <= '9'
-}
-
-func isBackslash(ch byte) bool {
-	return ch == '\\'
-}
-
 func newToken(t TokenType, l byte, line int) Token {
 	return Token{Type: t, Literal: string(l), Line: line}
-}
-
-func handleDelimiters(l *Lexer) (Token, bool) {
-	c := l.ch
-	if l.ch == ',' {
-		l.readChar()
-		return newToken(COMMA, c, l.line), true
-	} else if l.ch == ';' {
-		l.readChar()
-		return newToken(SEMICOLON, c, l.line), true
-	} else if l.ch == '(' {
-		l.readChar()
-		return newToken(LPAREN, c, l.line), true
-	} else if l.ch == ')' {
-		l.readChar()
-		return newToken(RPAREN, c, l.line), true
-	} else if l.ch == '{' {
-		l.readChar()
-		return newToken(LBRACE, c, l.line), true
-	} else if l.ch == '}' {
-		l.readChar()
-		return newToken(RBRACE, c, l.line), true
-	}
-
-	return Token{}, false
 }
