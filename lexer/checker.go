@@ -184,6 +184,11 @@ func (c compareChecker) Check(l *Lexer) (Token, bool) {
 		l.readChar()
 		return tok, true
 	}
+	if l.ch == '>' {
+		tok = newToken(GREATERTHAN, l.ch, l.line)
+		l.readChar()
+		return tok, true
+	}
 
 	return tok, false
 }

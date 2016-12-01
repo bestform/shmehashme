@@ -86,6 +86,17 @@ var tests = []testsetup{
 			{RPAREN, ")"},
 			{LBRACE, "{"},
 			{RBRACE, "}"},
+
+			// compare
+			{IDENT, "$i"},
+			{LESSTHAN, "<"},
+			{INT, "10"},
+			{SEMICOLON, ";"},
+
+			{IDENT, "$i"},
+			{GREATERTHAN, ">"},
+			{INT, "10"},
+			{SEMICOLON, ";"},
 		},
 	},
 	{
