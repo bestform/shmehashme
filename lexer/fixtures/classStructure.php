@@ -2,7 +2,7 @@
 
 use Foo\Bar;
 
-class Foo {
+class Foo extends Bar implements BarInterface {
 
     public function foo($bar, $baz)
     {

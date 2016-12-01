@@ -204,3 +204,34 @@ func (c compareChecker) Check(l *Lexer) (Token, bool) {
 
 	return tok, false
 }
+
+type stringChecker struct{}
+
+func (s stringChecker) Check(l *Lexer) (Token, bool) {
+	tok := Token{}
+	if l.ch != '"' {
+		return tok, false
+	}
+	l.readChar()
+	tok.Type = DOUBLEQUOTEDSTRING
+	tok.Literal = s.readString(l)
+	l.readChar()
+
+	return tok, true
+}
+
+func (s stringChecker) readString(l *Lexer) string {
+	pos := l.position
+	var res []byte
+	for {
+		l.scan('"')
+		if l.input[l.position-1] != '\\' || l.ch == 0 {
+			res = append(res, l.input[pos:l.position]...)
+			break
+		}
+		res = append(res, l.input[pos:l.position-1]...)
+		pos = l.position
+		l.readChar()
+	}
+	return string(res)
+}

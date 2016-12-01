@@ -35,6 +35,7 @@ func New(input io.Reader) (*Lexer, error) {
 		identifierChecker{},
 		phptagChecker{},
 		compareChecker{},
+		stringChecker{},
 	}
 	l.readChar()
 
@@ -57,6 +58,15 @@ func (l *Lexer) readChar() {
 func (l *Lexer) advance(p int) {
 	for i := 0; i < p; i++ {
 		l.readChar()
+	}
+}
+
+func (l *Lexer) scan(c byte) {
+	for l.ch != c {
+		l.readChar()
+		if l.ch == 0 {
+			return
+		}
 	}
 }
 

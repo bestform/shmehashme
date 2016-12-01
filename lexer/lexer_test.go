@@ -18,6 +18,17 @@ type testsetup struct {
 
 var tests = []testsetup{
 	{
+		filename: "fixtures/strings.php",
+		testcases: []testcase{
+			{PHPTAG, "<?php"},
+
+			{DOUBLEQUOTEDSTRING, "foo"},
+			{SEMICOLON, ";"},
+			{DOUBLEQUOTEDSTRING, "foo\"bar"},
+			{SEMICOLON, ";"},
+		},
+	},
+	{
 		filename: "fixtures/assignments.php",
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
@@ -120,6 +131,10 @@ var tests = []testsetup{
 
 			{CLASS, "class"},
 			{IDENT, "Foo"},
+			{EXTENDS, "extends"},
+			{IDENT, "Bar"},
+			{IMPLEMENTS, "implements"},
+			{IDENT, "BarInterface"},
 			{LBRACE, "{"},
 
 			{PUBLIC, "public"},

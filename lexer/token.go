@@ -15,6 +15,8 @@ const (
 	ILLEGAL = "ILLEGAL"
 	// EOF indicates the end of the file
 	EOF = "EOF"
+	// DOUBLEQUOTEDSTRING represents double quoted strings
+	DOUBLEQUOTEDSTRING = "doublequotedstring"
 
 	// Identifiers and literals
 
@@ -79,6 +81,10 @@ const (
 	PHPTAG = "<?php"
 	// CLASS is "class"
 	CLASS = "class"
+	// IMPLEMENTS is "implements"
+	IMPLEMENTS = "implements"
+	// EXTENDS is "extends"
+	EXTENDS = "extends"
 	// IF is "if"
 	IF = "if"
 	// TRUE is "true"
@@ -98,22 +104,24 @@ const (
 )
 
 var keywords = map[string]TokenType{
-	"function":  FUNCTION,
-	"return":    RETURN,
-	"public":    PUBLIC,
-	"private":   PRIVATE,
-	"protected": PROTECTED,
-	"static":    STATIC,
-	"<?php":     PHPTAG,
-	"class":     CLASS,
-	"if":        IF,
-	"true":      TRUE,
-	"false":     FALSE,
-	"use":       USE,
-	"for":       FOR,
-	"foreach":   FOREACH,
-	"as":        AS,
-	"=>":        ARROW,
+	"function":   FUNCTION,
+	"return":     RETURN,
+	"public":     PUBLIC,
+	"private":    PRIVATE,
+	"protected":  PROTECTED,
+	"static":     STATIC,
+	"<?php":      PHPTAG,
+	"class":      CLASS,
+	"if":         IF,
+	"true":       TRUE,
+	"false":      FALSE,
+	"use":        USE,
+	"for":        FOR,
+	"foreach":    FOREACH,
+	"as":         AS,
+	"=>":         ARROW,
+	"implements": IMPLEMENTS,
+	"extends":    EXTENDS,
 }
 
 // LookupIdent will search for possible keywords and return the
