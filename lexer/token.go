@@ -39,6 +39,10 @@ const (
 	LESSTHAN = "<"
 	// GREATERTHAN is ">"
 	GREATERTHAN = ">"
+	// LESSTHANOREQUAL is "<="
+	LESSTHANOREQUAL = "<="
+	// GREATERTHANOREQUAL is ">="
+	GREATERTHANOREQUAL = ">="
 	// INC is "++" - used for both preinc and postinc. It is the job of the parser to differentiate
 	INC = "++"
 

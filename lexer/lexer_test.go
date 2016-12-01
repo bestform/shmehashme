@@ -97,6 +97,16 @@ var tests = []testsetup{
 			{GREATERTHAN, ">"},
 			{INT, "10"},
 			{SEMICOLON, ";"},
+
+			{IDENT, "$i"},
+			{LESSTHANOREQUAL, "<="},
+			{INT, "10"},
+			{SEMICOLON, ";"},
+
+			{IDENT, "$i"},
+			{GREATERTHANOREQUAL, ">="},
+			{INT, "10"},
+			{SEMICOLON, ";"},
 		},
 	},
 	{
