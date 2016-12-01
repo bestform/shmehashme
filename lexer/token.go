@@ -71,6 +71,8 @@ const (
 	PUBLIC = "public"
 	// PRIVATE is "private"
 	PRIVATE = "private"
+	// STATIC is "static"
+	STATIC = "static"
 	// PROTECTED is "protected"
 	PROTECTED = "protected"
 	// PHPTAG is "<?php"
@@ -101,6 +103,7 @@ var keywords = map[string]TokenType{
 	"public":    PUBLIC,
 	"private":   PRIVATE,
 	"protected": PROTECTED,
+	"static":    STATIC,
 	"<?php":     PHPTAG,
 	"class":     CLASS,
 	"if":        IF,

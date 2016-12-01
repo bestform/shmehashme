@@ -8,7 +8,7 @@ class Foo {
     {
         return $bar + $baz;
     }
-    private function bar(){}
+    static private function bar(){}
     protected function baz(){}
 }
 

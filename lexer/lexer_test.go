@@ -140,6 +140,7 @@ var tests = []testsetup{
 			{SEMICOLON, ";"},
 			{RBRACE, "}"},
 
+			{STATIC, "static"},
 			{PRIVATE, "private"},
 			{FUNCTION, "function"},
 			{IDENT, "bar"},
