@@ -26,6 +26,11 @@ var tests = []testsetup{
 			{ASSIGN, "="},
 			{IDENT, "$bar"},
 			{SEMICOLON, ";"},
+
+			{IDENT, "$foo"},
+			{REFERENCE, "=&"},
+			{IDENT, "$bar"},
+			{SEMICOLON, ";"},
 		},
 	},
 	{

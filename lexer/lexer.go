@@ -102,6 +102,12 @@ func (l *Lexer) NextToken() Token {
 
 			return tok
 		}
+		if l.input[l.position:l.position+2] == "=&" {
+			tok.Type = REFERENCE
+			tok.Literal = "=&"
+			l.advance(2)
+			return tok
+		}
 		tok = newToken(ASSIGN, l.ch, l.line)
 		l.readChar()
 		return tok

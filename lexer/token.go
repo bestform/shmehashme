@@ -27,6 +27,8 @@ const (
 
 	// ASSIGN is "="
 	ASSIGN = "="
+	// REFERENCE is "=&"
+	REFERENCE = "=&"
 	// PLUS is "+""
 	PLUS = "+"
 	// EQUALS is "=="
