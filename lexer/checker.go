@@ -1,5 +1,9 @@
 package lexer
 
+import (
+	"regexp"
+)
+
 // checker receives a pointer to a lexer and tries to
 // lex a token. If it is successful, it will return it as
 // well as true, otherwise it will return an empty token and false
@@ -122,7 +126,7 @@ func (c numberChecker) Check(l *Lexer) (Token, bool) {
 	return tok, false
 }
 
-func (c numberChecker) isInt(b byte) bool {
+func (c numberChecker) isInt(b rune) bool {
 	return b >= '0' && b <= '9'
 }
 
@@ -139,7 +143,7 @@ type identifierChecker struct{}
 
 func (i identifierChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
-	if i.isLetter(l.ch) {
+	if i.isValidInIdentifier(l.ch) {
 		tok.Literal = i.readIdentifier(l)
 		tok.Type = LookupIdent(tok.Literal)
 		return tok, true
@@ -148,13 +152,17 @@ func (i identifierChecker) Check(l *Lexer) (Token, bool) {
 	return tok, false
 }
 
-func (i identifierChecker) isLetter(ch byte) bool {
-	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_' || ch == '$'
+func (i identifierChecker) isValidInIdentifier(ch rune) bool {
+	r, err := regexp.Compile("[a-zA-Z0-9_$äöüÄÖÜß]") // @todo fix first character rule, missing bytes 127 through 255
+	if err != nil {
+		panic(err)
+	}
+	return r.MatchString(string(ch))
 }
 
 func (i identifierChecker) readIdentifier(l *Lexer) string {
 	position := l.position
-	for i.isLetter(l.ch) || l.ch == '\\' {
+	for i.isValidInIdentifier(l.ch) || l.ch == '\\' {
 		l.readChar()
 	}
 
@@ -208,7 +216,7 @@ func (c compareChecker) Check(l *Lexer) (Token, bool) {
 }
 
 type stringChecker struct {
-	delimiter byte
+	delimiter rune
 	tokenType TokenType
 }
 
@@ -229,7 +237,7 @@ func (s stringChecker) readString(l *Lexer) string {
 	pos := l.position
 	var res []byte
 	for {
-		l.scan([]byte{s.delimiter, '\\'})
+		l.scan([]rune{s.delimiter, '\\'})
 		if l.ch == '\\' {
 			res = append(res, l.input[pos:l.position]...)
 			l.advance(2)

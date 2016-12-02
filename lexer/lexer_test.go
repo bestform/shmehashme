@@ -18,6 +18,17 @@ type testsetup struct {
 
 var tests = []testsetup{
 	{
+		filename: "fixtures/utf-8.php",
+		testcases: []testcase{
+			{PHPTAG, "<?php"},
+
+			{IDENT, "$füübää"},
+			{ASSIGN, "="},
+			{DOUBLEQUOTEDSTRING, "Übergrößenträger"},
+			{SEMICOLON, ";"},
+		},
+	},
+	{
 		filename: "fixtures/strings.php",
 		testcases: []testcase{
 			{PHPTAG, "<?php"},

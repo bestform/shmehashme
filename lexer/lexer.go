@@ -3,6 +3,7 @@ package lexer
 import (
 	"bufio"
 	"io"
+	"unicode/utf8"
 )
 
 // Lexer can lex PHP source code into tokens
@@ -10,7 +11,8 @@ type Lexer struct {
 	input        string
 	position     int  // current position in input (points to current char)
 	readPosition int  // current reading position in input (after current char)
-	ch           byte // current char under examination
+	ch           rune // current rune under examination
+	chsize       int  // current length of the rune in ch
 	line         int  // current line in input
 	checkers     []checker
 }
@@ -53,13 +55,13 @@ func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
 		l.ch = 0
 	} else {
-		l.ch = l.input[l.readPosition]
+		l.ch, l.chsize = utf8.DecodeRuneInString(l.input[l.readPosition:])
 	}
 	if l.ch == '\n' {
 		l.line++
 	}
 	l.position = l.readPosition
-	l.readPosition++
+	l.readPosition += l.chsize
 }
 
 func (l *Lexer) advance(p int) {
@@ -68,8 +70,8 @@ func (l *Lexer) advance(p int) {
 	}
 }
 
-func (l *Lexer) scan(c []byte) {
-	for !byteInSlice(l.ch, c) {
+func (l *Lexer) scan(c []rune) {
+	for !runeInSlice(l.ch, c) {
 		l.readChar()
 		if l.ch == 0 {
 			return
@@ -77,7 +79,7 @@ func (l *Lexer) scan(c []byte) {
 	}
 }
 
-func byteInSlice(b byte, s []byte) bool {
+func runeInSlice(b rune, s []rune) bool {
 	for _, test := range s {
 		if b == test {
 			return true
@@ -113,6 +115,6 @@ func (l *Lexer) skipWhitespace() {
 	}
 }
 
-func newToken(t TokenType, l byte, line int) Token {
+func newToken(t TokenType, l rune, line int) Token {
 	return Token{Type: t, Literal: string(l), Line: line}
 }
