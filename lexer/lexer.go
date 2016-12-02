@@ -68,13 +68,23 @@ func (l *Lexer) advance(p int) {
 	}
 }
 
-func (l *Lexer) scan(c byte) {
-	for l.ch != c {
+func (l *Lexer) scan(c []byte) {
+	for !byteInSlice(l.ch, c) {
 		l.readChar()
 		if l.ch == 0 {
 			return
 		}
 	}
+}
+
+func byteInSlice(b byte, s []byte) bool {
+	for _, test := range s {
+		if b == test {
+			return true
+		}
+	}
+
+	return false
 }
 
 // NextToken returns the next token and advances internally. At the end it will return EOF

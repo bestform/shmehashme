@@ -26,6 +26,8 @@ var tests = []testsetup{
 			{SEMICOLON, ";"},
 			{DOUBLEQUOTEDSTRING, "foo\"bar"},
 			{SEMICOLON, ";"},
+			{DOUBLEQUOTEDSTRING, "foo\\\\bar"},
+			{SEMICOLON, ";"},
 
 			{SINGLEQUOTEDSTRING, "foo"},
 			{SEMICOLON, ";"},

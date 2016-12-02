@@ -227,14 +227,15 @@ func (s stringChecker) readString(l *Lexer) string {
 	pos := l.position
 	var res []byte
 	for {
-		l.scan(s.delimiter)
-		if l.input[l.position-1] != '\\' || l.ch == 0 {
+		l.scan([]byte{s.delimiter, '\\'})
+		if l.ch == '\\' {
 			res = append(res, l.input[pos:l.position]...)
-			break
+			l.advance(2)
+			pos = l.position - 1
+			continue
 		}
-		res = append(res, l.input[pos:l.position-1]...)
-		pos = l.position
-		l.readChar()
+		res = append(res, l.input[pos:l.position]...)
+		break
 	}
 	return string(res)
 }
