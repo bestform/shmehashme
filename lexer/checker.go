@@ -11,22 +11,24 @@ type delimiterChecker struct{}
 
 func (d delimiterChecker) Check(l *Lexer) (Token, bool) {
 	c := l.ch
-	if l.ch == ',' {
+
+	switch l.ch {
+	case ',':
 		l.readChar()
 		return newToken(COMMA, c, l.line), true
-	} else if l.ch == ';' {
+	case ';':
 		l.readChar()
 		return newToken(SEMICOLON, c, l.line), true
-	} else if l.ch == '(' {
+	case '(':
 		l.readChar()
 		return newToken(LPAREN, c, l.line), true
-	} else if l.ch == ')' {
+	case ')':
 		l.readChar()
 		return newToken(RPAREN, c, l.line), true
-	} else if l.ch == '{' {
+	case '{':
 		l.readChar()
 		return newToken(LBRACE, c, l.line), true
-	} else if l.ch == '}' {
+	case '}':
 		l.readChar()
 		return newToken(RBRACE, c, l.line), true
 	}
