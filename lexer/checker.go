@@ -205,15 +205,18 @@ func (c compareChecker) Check(l *Lexer) (Token, bool) {
 	return tok, false
 }
 
-type stringChecker struct{}
+type stringChecker struct {
+	delimiter byte
+	tokenType TokenType
+}
 
 func (s stringChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
-	if l.ch != '"' {
+	if l.ch != s.delimiter {
 		return tok, false
 	}
 	l.readChar()
-	tok.Type = DOUBLEQUOTEDSTRING
+	tok.Type = s.tokenType
 	tok.Literal = s.readString(l)
 	l.readChar()
 
@@ -224,7 +227,7 @@ func (s stringChecker) readString(l *Lexer) string {
 	pos := l.position
 	var res []byte
 	for {
-		l.scan('"')
+		l.scan(s.delimiter)
 		if l.input[l.position-1] != '\\' || l.ch == 0 {
 			res = append(res, l.input[pos:l.position]...)
 			break

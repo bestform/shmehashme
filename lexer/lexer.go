@@ -35,7 +35,14 @@ func New(input io.Reader) (*Lexer, error) {
 		identifierChecker{},
 		phptagChecker{},
 		compareChecker{},
-		stringChecker{},
+		stringChecker{
+			delimiter: '"',
+			tokenType: DOUBLEQUOTEDSTRING,
+		},
+		stringChecker{
+			delimiter: '\'',
+			tokenType: SINGLEQUOTEDSTRING,
+		},
 	}
 	l.readChar()
 

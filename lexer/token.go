@@ -17,6 +17,8 @@ const (
 	EOF = "EOF"
 	// DOUBLEQUOTEDSTRING represents double quoted strings
 	DOUBLEQUOTEDSTRING = "doublequotedstring"
+	// SINGLEQUOTEDSTRING represents double quoted strings
+	SINGLEQUOTEDSTRING = "singlequotedstring"
 
 	// Identifiers and literals
 
