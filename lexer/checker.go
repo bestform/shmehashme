@@ -257,9 +257,36 @@ func (c commentChecker) Check(l *Lexer) (Token, bool) {
 	if l.ch != '/' {
 		return tok, false
 	}
+	l.readChar()
+	multi := false
+	if l.ch == '*' {
+		multi = true
+	}
+	if !multi && l.ch != '/' {
+		return tok, false
+	}
 
-	l.advance(2) // add more cases (/* */, /** ...)
+	l.readChar() // add more cases (/** ...)
 	pos := l.position
+
+	if multi {
+		for {
+			l.scan([]rune{'*', 0})
+			if l.ch == 0 {
+				tok.Type = COMMENT
+				tok.Literal = l.input[pos : l.position-1]
+				return tok, true
+			}
+			l.readChar()
+			if l.ch == '/' {
+				tok.Type = COMMENT
+				tok.Literal = l.input[pos : l.position-1]
+				l.advance(1)
+				return tok, true
+			}
+		}
+	}
+
 	l.scan([]rune{'\n', 0}) // @todo: think about other newlines
 
 	tok.Type = COMMENT

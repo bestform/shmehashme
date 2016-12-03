@@ -23,6 +23,7 @@ var tests = []testsetup{
 			{PHPTAG, "<?php"},
 
 			{COMMENT, "single line comment"},
+			{COMMENT, " multi\nline\ncomment "},
 		},
 	},
 	{
