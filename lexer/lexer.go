@@ -45,6 +45,7 @@ func New(input io.Reader) (*Lexer, error) {
 			delimiter: '\'',
 			tokenType: SINGLEQUOTEDSTRING,
 		},
+		commentChecker{},
 	}
 	l.readChar()
 

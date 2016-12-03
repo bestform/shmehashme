@@ -19,6 +19,8 @@ const (
 	DOUBLEQUOTEDSTRING = "DOUBLEQUOTEDSTRING"
 	// SINGLEQUOTEDSTRING represents double quoted strings
 	SINGLEQUOTEDSTRING = "SINGLEQUOTEDSTRING"
+	// COMMENT is a comment
+	COMMENT = "COMMENT"
 
 	// Identifiers and literals
 

@@ -249,3 +249,21 @@ func (s stringChecker) readString(l *Lexer) string {
 	}
 	return string(res)
 }
+
+type commentChecker struct{}
+
+func (c commentChecker) Check(l *Lexer) (Token, bool) {
+	var tok Token
+	if l.ch != '/' {
+		return tok, false
+	}
+
+	l.advance(2) // add more cases (/* */, /** ...)
+	pos := l.position
+	l.scan([]rune{'\n', 0}) // @todo: think about other newlines
+
+	tok.Type = COMMENT
+	tok.Literal = l.input[pos:l.position]
+
+	return tok, true
+}

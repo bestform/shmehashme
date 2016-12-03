@@ -18,6 +18,14 @@ type testsetup struct {
 
 var tests = []testsetup{
 	{
+		filename: "fixtures/comments.php",
+		testcases: []testcase{
+			{PHPTAG, "<?php"},
+
+			{COMMENT, "single line comment"},
+		},
+	},
+	{
 		filename: "fixtures/utf-8.php",
 		testcases: []testcase{
 			{PHPTAG, "<?php"},

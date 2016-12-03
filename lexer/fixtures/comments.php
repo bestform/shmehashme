@@ -1,0 +1,3 @@
+<?php
+
+//single line comment
