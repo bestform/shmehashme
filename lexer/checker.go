@@ -91,10 +91,12 @@ func (c arithmeticChecker) Check(l *Lexer) (Token, bool) {
 			l.advance(2)
 			return tok, true
 		}
-		l.readChar()
-		tok.Type = MINUS
-		tok.Literal = "-"
-		return tok, true
+		if l.input[l.readPosition] != '>' {
+			l.readChar()
+			tok.Type = MINUS
+			tok.Literal = "-"
+			return tok, true
+		}
 	}
 	if l.ch == '/' {
 		if l.input[l.readPosition] == '/' || l.input[l.readPosition] == '*' {
@@ -134,7 +136,7 @@ func (c equalsChecker) Check(l *Lexer) (Token, bool) {
 			return tok, true
 		}
 		if l.input[l.position:l.position+2] == "=>" {
-			tok.Type = ARROW
+			tok.Type = DOUBLEARROW
 			tok.Literal = "=>"
 			l.advance(2)
 
@@ -357,4 +359,23 @@ func (c commentChecker) Check(l *Lexer) (Token, bool) {
 	tok.Literal = l.input[pos:l.position]
 
 	return tok, true
+}
+
+type arrowChecker struct{}
+
+func (a arrowChecker) Check(l *Lexer) (Token, bool) {
+	var tok Token
+	if l.ch == '-' && l.input[l.readPosition] == '>' {
+		tok.Type = ARROW
+		tok.Literal = "->"
+		l.advance(2)
+		return tok, true
+	}
+	if l.ch == '=' && l.input[l.readPosition] == '>' {
+		tok.Type = DOUBLEARROW
+		tok.Literal = "=>"
+		l.advance(2)
+		return tok, true
+	}
+	return tok, false
 }

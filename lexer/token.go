@@ -127,7 +127,9 @@ const (
 	FOREACH = "FOREACH"
 	// AS is as as used in a foreach loop
 	AS = "AS"
-	// ARROW is => as used in a foreach loop
+	// DOUBLEARROW is => as used in a foreach loop
+	DOUBLEARROW = "DOUBLEARROW"
+	// ARROW is -> as used in attribute access
 	ARROW = "ARROW"
 )
 
@@ -147,7 +149,6 @@ var keywords = map[string]TokenType{
 	"for":        FOR,
 	"foreach":    FOREACH,
 	"as":         AS,
-	"=>":         ARROW,
 	"implements": IMPLEMENTS,
 	"extends":    EXTENDS,
 }

@@ -50,6 +50,11 @@ var tests = []testsetup{
 			{INT, "1"},
 			{RSQUAREBRACKET, "]"},
 			{SEMICOLON, ";"},
+
+			{IDENT, "$foo"},
+			{ARROW, "->"},
+			{IDENT, "bar"},
+			{SEMICOLON, ";"},
 		},
 	},
 	{
@@ -160,7 +165,7 @@ var tests = []testsetup{
 			{IDENT, "$i"},
 			{AS, "as"},
 			{IDENT, "$j"},
-			{ARROW, "=>"},
+			{DOUBLEARROW, "=>"},
 			{IDENT, "$k"},
 			{RPAREN, ")"},
 			{LBRACE, "{"},

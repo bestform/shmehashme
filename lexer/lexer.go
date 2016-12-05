@@ -46,6 +46,7 @@ func New(input io.Reader) (*Lexer, error) {
 			tokenType: SINGLEQUOTEDSTRING,
 		},
 		commentChecker{},
+		arrowChecker{},
 	}
 	l.readChar()
 
