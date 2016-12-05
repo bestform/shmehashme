@@ -44,6 +44,11 @@ func (d delimiterChecker) Check(l *Lexer) (Token, bool) {
 	case '.':
 		l.readChar()
 		return newToken(DOT, c, l.line), true
+	case '&':
+		if l.input[l.readPosition] != '&' {
+			l.readChar()
+			return newToken(REFERENCE, c, l.line), true
+		}
 	}
 
 	return Token{}, false
@@ -133,12 +138,6 @@ func (c equalsChecker) Check(l *Lexer) (Token, bool) {
 			tok.Literal = "=>"
 			l.advance(2)
 
-			return tok, true
-		}
-		if l.input[l.position:l.position+2] == "=&" {
-			tok.Type = REFERENCE
-			tok.Literal = "=&"
-			l.advance(2)
 			return tok, true
 		}
 		tok = newToken(ASSIGN, l.ch, l.line)

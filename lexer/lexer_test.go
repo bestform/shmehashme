@@ -106,7 +106,8 @@ var tests = []testsetup{
 			{SEMICOLON, ";"},
 
 			{IDENT, "$foo"},
-			{REFERENCE, "=&"},
+			{ASSIGN, "="},
+			{REFERENCE, "&"},
 			{IDENT, "$bar"},
 			{SEMICOLON, ";"},
 		},
