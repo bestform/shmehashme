@@ -18,6 +18,18 @@ type testsetup struct {
 
 var tests = []testsetup{
 	{
+		filename: "fixtures/misc.php",
+		testcases: []testcase{
+			{PHPTAG, "<?php"},
+
+			{IDENT, "$array"},
+			{LSQUAREBRACKET, "["},
+			{INT, "1"},
+			{RSQUAREBRACKET, "]"},
+			{SEMICOLON, ";"},
+		},
+	},
+	{
 		filename: "fixtures/comments.php",
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
