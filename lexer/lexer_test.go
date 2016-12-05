@@ -18,6 +18,29 @@ type testsetup struct {
 
 var tests = []testsetup{
 	{
+		filename: "fixtures/arithmetic.php",
+		testcases: []testcase{
+			{PHPTAG, "<?php"},
+
+			{INT, "1"},
+			{PLUS, "+"},
+			{INT, "2"},
+			{MINUS, "-"},
+			{INT, "3"},
+			{MULTIPLY, "*"},
+			{INT, "4"},
+			{DIVIDE, "/"},
+			{INT, "5"},
+			{SEMICOLON, ";"},
+			{IDENT, "$a"},
+			{INC, "++"},
+			{SEMICOLON, ";"},
+			{IDENT, "$b"},
+			{DEC, "--"},
+			{SEMICOLON, ";"},
+		},
+	},
+	{
 		filename: "fixtures/misc.php",
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
@@ -189,8 +212,6 @@ var tests = []testsetup{
 
 			{RETURN, "return"},
 			{IDENT, "$bar"},
-			{PLUS, "+"},
-			{IDENT, "$baz"},
 			{SEMICOLON, ";"},
 			{RBRACE, "}"},
 
@@ -244,12 +265,12 @@ func TestNextToken(t *testing.T) {
 		for i, tt := range testcase.testcases {
 			tok := l.NextToken()
 			if tok.Type != tt.expectedType {
-				t.Fatalf("tests[%d] - tokenType wrong. expected=%q, got=%q (%v)",
-					i, tt.expectedType, tok.Type, tok.Literal)
+				t.Fatalf("tests[%d] (%v) - tokenType wrong. expected=%q, got=%q (%v)",
+					i, testcase.filename, tt.expectedType, tok.Type, tok.Literal)
 			}
 			if tok.Literal != tt.expectedLiteral {
-				t.Fatalf("tests[%d] - token literal wrong. expected=%q, got=%q",
-					i, tt.expectedLiteral, tok.Literal)
+				t.Fatalf("tests[%d] (%v) - token literal wrong. expected=%q, got=%q",
+					i, testcase.filename, tt.expectedLiteral, tok.Literal)
 			}
 		}
 	}

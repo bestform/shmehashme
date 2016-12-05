@@ -31,7 +31,7 @@ func New(input io.Reader) (*Lexer, error) {
 	l.checkers = []checker{
 		delimiterChecker{},
 		eofChecker{},
-		plusChecker{},
+		arithmeticChecker{},
 		equalsChecker{},
 		numberChecker{},
 		identifierChecker{},

@@ -6,7 +6,7 @@ class Foo extends Bar implements BarInterface {
 
     public function foo($bar, $baz)
     {
-        return $bar + $baz;
+        return $bar;
     }
     static private function bar(){}
     protected function baz(){}

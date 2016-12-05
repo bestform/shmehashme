@@ -60,22 +60,49 @@ func (c eofChecker) Check(l *Lexer) (Token, bool) {
 	return Token{}, false
 }
 
-type plusChecker struct{}
+type arithmeticChecker struct{}
 
-func (c plusChecker) Check(l *Lexer) (Token, bool) {
+func (c arithmeticChecker) Check(l *Lexer) (Token, bool) {
+	var tok Token
 	if l.ch == '+' {
-		l.readChar()
-		if l.ch == '+' {
-			tok := Token{}
+		if l.input[l.readPosition] == '+' {
 			tok.Type = INC
 			tok.Literal = "++"
-			l.readChar()
+			l.advance(2)
 			return tok, true
 		}
-		tok := newToken(PLUS, '+', l.line)
+		l.readChar()
+		tok.Type = PLUS
+		tok.Literal = "+"
 		return tok, true
 	}
-
+	if l.ch == '-' {
+		if l.input[l.readPosition] == '-' {
+			tok.Type = DEC
+			tok.Literal = "--"
+			l.advance(2)
+			return tok, true
+		}
+		l.readChar()
+		tok.Type = MINUS
+		tok.Literal = "-"
+		return tok, true
+	}
+	if l.ch == '/' {
+		if l.input[l.readPosition] == '/' || l.input[l.readPosition] == '*' {
+			return tok, false
+		}
+		tok.Type = DIVIDE
+		tok.Literal = "/"
+		l.readChar()
+		return tok, true
+	}
+	if l.ch == '*' {
+		tok.Type = MULTIPLY
+		tok.Literal = "*"
+		l.readChar()
+		return tok, true
+	}
 	return Token{}, false
 }
 

@@ -35,8 +35,14 @@ const (
 	ASSIGN = "ASSIGN"
 	// REFERENCE is "=&"
 	REFERENCE = "REFERENCE"
-	// PLUS is "+""
+	// PLUS is "+"
 	PLUS = "PLUS"
+	// MINUS is "-"
+	MINUS = "MINUS"
+	// MULTIPLY is "*"
+	MULTIPLY = "MULTIPLY"
+	// DIVIDE is "/"
+	DIVIDE = "DIVIDE"
 	// EQUALS is "=="
 	EQUALS = "EQUALS"
 	// IDENTITY is "==="
@@ -51,6 +57,8 @@ const (
 	GREATERTHANOREQUAL = "GREATERTHANOREQUAL"
 	// INC is "++" - used for both preinc and postinc. It is the job of the parser to differentiate
 	INC = "INC"
+	// DEC is "--" - used for both preinc and postinc. It is the job of the parser to differentiate
+	DEC = "DEC"
 
 	// Delimiters
 
