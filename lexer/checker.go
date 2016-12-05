@@ -41,6 +41,9 @@ func (d delimiterChecker) Check(l *Lexer) (Token, bool) {
 	case ']':
 		l.readChar()
 		return newToken(RSQUAREBRACKET, c, l.line), true
+	case '.':
+		l.readChar()
+		return newToken(DOT, c, l.line), true
 	}
 
 	return Token{}, false

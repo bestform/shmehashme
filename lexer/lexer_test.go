@@ -88,6 +88,11 @@ var tests = []testsetup{
 			{SEMICOLON, ";"},
 			{SINGLEQUOTEDSTRING, "foo'bar"},
 			{SEMICOLON, ";"},
+
+			{SINGLEQUOTEDSTRING, "foo"},
+			{DOT, "."},
+			{SINGLEQUOTEDSTRING, "bar"},
+			{SEMICOLON, ";"},
 		},
 	},
 	{

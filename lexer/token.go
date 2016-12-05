@@ -68,6 +68,8 @@ const (
 
 	// COMMA is ","
 	COMMA = "COMMA"
+	// DOT is "."
+	DOT = "DOT"
 	// SEMICOLON is ";"
 	SEMICOLON = "SEMICOLON"
 	// LPAREN is "("
