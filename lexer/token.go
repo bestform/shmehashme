@@ -59,6 +59,10 @@ const (
 	INC = "INC"
 	// DEC is "--" - used for both preinc and postinc. It is the job of the parser to differentiate
 	DEC = "DEC"
+	// QUESTIONMARK is "?" - as used in ternary operations
+	QUESTIONMARK = "QUESTIONMARK"
+	// COLON is ":" - as used in ternary operations
+	COLON = "COLON"
 
 	// Delimiters
 

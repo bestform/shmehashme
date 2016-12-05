@@ -244,7 +244,18 @@ func (c compareChecker) Check(l *Lexer) (Token, bool) {
 		l.readChar()
 		return tok, true
 	}
-
+	if l.ch == '?' {
+		tok.Type = QUESTIONMARK
+		tok.Literal = "?"
+		l.readChar()
+		return tok, true
+	}
+	if l.ch == ':' {
+		tok.Type = COLON
+		tok.Literal = ":"
+		l.readChar()
+		return tok, true
+	}
 	return tok, false
 }
 

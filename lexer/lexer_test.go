@@ -160,6 +160,14 @@ var tests = []testsetup{
 			{LBRACE, "{"},
 			{RBRACE, "}"},
 
+			// ternary operation
+			{IDENT, "$foo"},
+			{QUESTIONMARK, "?"},
+			{INT, "1"},
+			{COLON, ":"},
+			{INT, "2"},
+			{SEMICOLON, ";"},
+
 			// compare
 			{IDENT, "$i"},
 			{LESSTHAN, "<"},
