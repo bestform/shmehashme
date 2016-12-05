@@ -173,6 +173,23 @@ var tests = []testsetup{
 			{INT, "2"},
 			{SEMICOLON, ";"},
 
+			// or
+			{IDENT, "$foo"},
+			{OR, "||"},
+			{IDENT, "$bar"},
+			{SEMICOLON, ";"},
+
+			// and
+			{IDENT, "$foo"},
+			{AND, "&&"},
+			{IDENT, "$bar"},
+			{SEMICOLON, ";"},
+
+			// not
+			{NOT, "!"},
+			{IDENT, "$foo"},
+			{SEMICOLON, ";"},
+
 			// compare
 			{IDENT, "$i"},
 			{LESSTHAN, "<"},

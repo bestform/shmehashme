@@ -259,6 +259,24 @@ func (c compareChecker) Check(l *Lexer) (Token, bool) {
 		l.readChar()
 		return tok, true
 	}
+	if l.ch == '!' {
+		tok.Type = NOT
+		tok.Literal = "!"
+		l.readChar()
+		return tok, true
+	}
+	if l.ch == '|' && l.input[l.readPosition] == '|' {
+		tok.Type = OR
+		tok.Literal = "||"
+		l.advance(2)
+		return tok, true
+	}
+	if l.ch == '&' && l.input[l.readPosition] == '&' {
+		tok.Type = AND
+		tok.Literal = "&&"
+		l.advance(2)
+		return tok, true
+	}
 	return tok, false
 }
 

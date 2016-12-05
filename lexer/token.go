@@ -55,6 +55,12 @@ const (
 	LESSTHANOREQUAL = "LESSTHANOREQUAL"
 	// GREATERTHANOREQUAL is ">="
 	GREATERTHANOREQUAL = "GREATERTHANOREQUAL"
+	// OR is "||"
+	OR = "OR"
+	// AND is "&&"
+	AND = "AND"
+	// NOT is "!"
+	NOT = "NOT"
 	// INC is "++" - used for both preinc and postinc. It is the job of the parser to differentiate
 	INC = "INC"
 	// DEC is "--" - used for both preinc and postinc. It is the job of the parser to differentiate

@@ -10,6 +10,10 @@ foreach($i as $j => $k) {}
 
 $foo ? 1 : 2;
 
+$foo || $bar;
+$foo && $bar;
+!$foo;
+
 $i < 10;
 $i > 10;
 $i <= 10;
