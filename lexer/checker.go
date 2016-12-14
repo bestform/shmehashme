@@ -227,12 +227,19 @@ type compareChecker struct{}
 func (c compareChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
 	if l.ch == '<' {
+		if l.input[l.position+1:l.position+3] == "=>" {
+			tok.Type = SPACESHIP
+			tok.Literal = "<=>"
+			l.advance(3)
+			return tok, true
+		}
 		if (l.input[l.position+1]) == '=' {
 			tok.Type = LESSTHANOREQUAL
 			tok.Literal = "<="
 			l.advance(2)
 			return tok, true
 		}
+
 		tok = newToken(LESSTHAN, l.ch, l.line)
 		l.readChar()
 		return tok, true

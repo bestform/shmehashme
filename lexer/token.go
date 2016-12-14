@@ -131,6 +131,10 @@ const (
 	DOUBLEARROW = "DOUBLEARROW"
 	// ARROW is -> as used in attribute access
 	ARROW = "ARROW"
+
+	// PHP7
+	// SPACESHIP is the spaceship operator added in php7: <=>
+	SPACESHIP = "SPACESHIP"
 )
 
 var keywords = map[string]TokenType{
