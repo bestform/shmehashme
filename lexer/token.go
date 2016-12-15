@@ -133,6 +133,7 @@ const (
 	ARROW = "ARROW"
 
 	// PHP7
+
 	// SPACESHIP is the spaceship operator added in php7: <=>
 	SPACESHIP = "SPACESHIP"
 )
