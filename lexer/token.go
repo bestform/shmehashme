@@ -24,8 +24,10 @@ const (
 
 	// Identifiers and literals
 
-	// IDENT represents all kinds of identifiers, like variables, function names, internal functions etc.
-	IDENT = "IDENT" // $foo, $bar, foo, print
+	// IDENT represents all kinds of identifiers, like function names, internal functions etc.
+	IDENT = "IDENT" // foo, print
+	// VAR reperesents variables ($foo, $bar etc)
+	VAR = "VAR"
 	// INT is an integer
 	INT = "INT" // 123456
 
@@ -163,6 +165,9 @@ var keywords = map[string]TokenType{
 func LookupIdent(ident string) TokenType {
 	if tok, ok := keywords[ident]; ok {
 		return tok
+	}
+	if ident[0] == '$' {
+		return VAR
 	}
 
 	return IDENT

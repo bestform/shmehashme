@@ -22,9 +22,9 @@ var tests = []testsetup{
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
 
-			{IDENT, "$a"},
+			{VAR, "$a"},
 			{SPACESHIP, "<=>"},
-			{IDENT, "$b"},
+			{VAR, "$b"},
 			{SEMICOLON, ";"},
 		},
 	},
@@ -43,10 +43,10 @@ var tests = []testsetup{
 			{DIVIDE, "/"},
 			{INT, "5"},
 			{SEMICOLON, ";"},
-			{IDENT, "$a"},
+			{VAR, "$a"},
 			{INC, "++"},
 			{SEMICOLON, ";"},
-			{IDENT, "$b"},
+			{VAR, "$b"},
 			{DEC, "--"},
 			{SEMICOLON, ";"},
 		},
@@ -56,13 +56,13 @@ var tests = []testsetup{
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
 
-			{IDENT, "$array"},
+			{VAR, "$array"},
 			{LSQUAREBRACKET, "["},
 			{INT, "1"},
 			{RSQUAREBRACKET, "]"},
 			{SEMICOLON, ";"},
 
-			{IDENT, "$foo"},
+			{VAR, "$foo"},
 			{ARROW, "->"},
 			{IDENT, "bar"},
 			{SEMICOLON, ";"},
@@ -82,7 +82,7 @@ var tests = []testsetup{
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
 
-			{IDENT, "$füübää"},
+			{VAR, "$füübää"},
 			{ASSIGN, "="},
 			{DOUBLEQUOTEDSTRING, "Übergrößenträger"},
 			{SEMICOLON, ";"},
@@ -116,15 +116,15 @@ var tests = []testsetup{
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
 
-			{IDENT, "$foo"},
+			{VAR, "$foo"},
 			{ASSIGN, "="},
-			{IDENT, "$bar"},
+			{VAR, "$bar"},
 			{SEMICOLON, ";"},
 
-			{IDENT, "$foo"},
+			{VAR, "$foo"},
 			{ASSIGN, "="},
 			{REFERENCE, "&"},
-			{IDENT, "$bar"},
+			{VAR, "$bar"},
 			{SEMICOLON, ";"},
 		},
 	},
@@ -156,15 +156,15 @@ var tests = []testsetup{
 			// for
 			{FOR, "for"},
 			{LPAREN, "("},
-			{IDENT, "$i"},
+			{VAR, "$i"},
 			{ASSIGN, "="},
 			{INT, "0"},
 			{SEMICOLON, ";"},
-			{IDENT, "$i"},
+			{VAR, "$i"},
 			{LESSTHAN, "<"},
 			{INT, "10"},
 			{SEMICOLON, ";"},
-			{IDENT, "$i"},
+			{VAR, "$i"},
 			{INC, "++"},
 			{RPAREN, ")"},
 			{LBRACE, "{"},
@@ -173,17 +173,17 @@ var tests = []testsetup{
 			// foreach
 			{FOREACH, "foreach"},
 			{LPAREN, "("},
-			{IDENT, "$i"},
+			{VAR, "$i"},
 			{AS, "as"},
-			{IDENT, "$j"},
+			{VAR, "$j"},
 			{DOUBLEARROW, "=>"},
-			{IDENT, "$k"},
+			{VAR, "$k"},
 			{RPAREN, ")"},
 			{LBRACE, "{"},
 			{RBRACE, "}"},
 
 			// ternary operation
-			{IDENT, "$foo"},
+			{VAR, "$foo"},
 			{QUESTIONMARK, "?"},
 			{INT, "1"},
 			{COLON, ":"},
@@ -191,39 +191,39 @@ var tests = []testsetup{
 			{SEMICOLON, ";"},
 
 			// or
-			{IDENT, "$foo"},
+			{VAR, "$foo"},
 			{OR, "||"},
-			{IDENT, "$bar"},
+			{VAR, "$bar"},
 			{SEMICOLON, ";"},
 
 			// and
-			{IDENT, "$foo"},
+			{VAR, "$foo"},
 			{AND, "&&"},
-			{IDENT, "$bar"},
+			{VAR, "$bar"},
 			{SEMICOLON, ";"},
 
 			// not
 			{NOT, "!"},
-			{IDENT, "$foo"},
+			{VAR, "$foo"},
 			{SEMICOLON, ";"},
 
 			// compare
-			{IDENT, "$i"},
+			{VAR, "$i"},
 			{LESSTHAN, "<"},
 			{INT, "10"},
 			{SEMICOLON, ";"},
 
-			{IDENT, "$i"},
+			{VAR, "$i"},
 			{GREATERTHAN, ">"},
 			{INT, "10"},
 			{SEMICOLON, ";"},
 
-			{IDENT, "$i"},
+			{VAR, "$i"},
 			{LESSTHANOREQUAL, "<="},
 			{INT, "10"},
 			{SEMICOLON, ";"},
 
-			{IDENT, "$i"},
+			{VAR, "$i"},
 			{GREATERTHANOREQUAL, ">="},
 			{INT, "10"},
 			{SEMICOLON, ";"},
@@ -250,15 +250,15 @@ var tests = []testsetup{
 			{FUNCTION, "function"},
 			{IDENT, "foo"},
 			{LPAREN, "("},
-			{IDENT, "$bar"},
+			{VAR, "$bar"},
 			{COMMA, ","},
-			{IDENT, "$baz"},
+			{VAR, "$baz"},
 			{RPAREN, ")"},
 
 			{LBRACE, "{"},
 
 			{RETURN, "return"},
-			{IDENT, "$bar"},
+			{VAR, "$bar"},
 			{SEMICOLON, ";"},
 			{RBRACE, "}"},
 
