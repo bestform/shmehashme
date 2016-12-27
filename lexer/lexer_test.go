@@ -297,9 +297,12 @@ var tests = []testsetup{
 }
 
 func TestNextToken(t *testing.T) {
-
+	pwd, err := os.Getwd()
+	if err != nil {
+		t.Fatal("error geting current directory")
+	}
 	for _, testcase := range tests {
-		input, err := os.OpenFile(testcase.filename, os.O_RDONLY, 0666)
+		input, err := os.OpenFile(pwd + "/lexer/" + testcase.filename, os.O_RDONLY, 0666)
 		defer input.Close()
 		if err != nil {
 			t.Fatal("error opening test fixture")
@@ -325,8 +328,11 @@ func TestNextToken(t *testing.T) {
 }
 
 func TestLineSupport(t *testing.T) {
-
-	input, err := os.OpenFile("fixtures/lineNumbers.php", os.O_RDONLY, 0666)
+	pwd, err := os.Getwd()
+	if err != nil {
+		t.Fatal("error geting current directory")
+	}
+	input, err := os.OpenFile(pwd + "/lexer/" + "fixtures/lineNumbers.php", os.O_RDONLY, 0666)
 	defer input.Close()
 	if err != nil {
 		t.Fatal("Error reading fixture", err)
