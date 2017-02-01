@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/bestform/shmehashme/lexer"
-	"os/user"
 	"github.com/bestform/shmehashme/repl"
+	"os/user"
 )
 
 func main() {
