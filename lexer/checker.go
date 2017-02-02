@@ -121,21 +121,21 @@ type equalsChecker struct{}
 func (c equalsChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
 	if l.ch == '=' {
-		if l.input[l.position:l.position+3] == "===" {
+		if l.position+3 < len(l.input) && l.input[l.position:l.position+3] == "===" {
 			tok.Type = IDENTITY
 			tok.Literal = "==="
 			l.advance(3)
 
 			return tok, true
 		}
-		if l.input[l.position:l.position+2] == "==" {
+		if l.position+2 < len(l.input) && l.input[l.position:l.position+2] == "==" {
 			tok.Type = EQUALS
 			tok.Literal = "=="
 			l.advance(2)
 
 			return tok, true
 		}
-		if l.input[l.position:l.position+2] == "=>" {
+		if l.position+2 < len(l.input) && l.input[l.position:l.position+2] == "=>" {
 			tok.Type = DOUBLEARROW
 			tok.Literal = "=>"
 			l.advance(2)
