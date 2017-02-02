@@ -7,15 +7,10 @@ import (
 
 	"github.com/bestform/shmehashme/lexer"
 	"github.com/bestform/shmehashme/repl"
-	"os/user"
 )
 
 func main() {
-	activeUser, err := user.Current()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("Hello %s! This a REPL for the shmehashme PHP lexer\n", activeUser.Username)
+	fmt.Println("Why hello there! This a REPL for the shmehashme PHP lexer")
 	fmt.Println("Feel free to type in commands")
 	repl.Start(os.Stdin, os.Stdout)
 }
