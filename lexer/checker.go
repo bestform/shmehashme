@@ -210,6 +210,9 @@ type phptagChecker struct{}
 
 func (p phptagChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
+	if l.position+5 > len(l.input) {
+		return tok, false
+	}
 	if l.input[l.position:l.position+5] == "<?php" {
 		tok.Type = PHPTAG
 		tok.Literal = "<?php"
