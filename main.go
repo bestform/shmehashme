@@ -15,7 +15,7 @@ func main() {
 	repl.Start(os.Stdin, os.Stdout)
 }
 
-func main_file() {
+func mainFile() {
 	file := flag.String("file", "", "File to lex")
 	flag.Parse()
 

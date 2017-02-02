@@ -8,13 +8,14 @@ import (
 	"strings"
 )
 
-const PROMPT = ">> "
+const prompt = ">> "
 
+// Start will launch a simple REPL that takes source code and will display the lexer result
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
 
 	for {
-		fmt.Print(PROMPT)
+		fmt.Print(prompt)
 		scanned := scanner.Scan()
 		if !scanned {
 			return
