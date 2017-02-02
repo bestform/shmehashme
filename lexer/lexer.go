@@ -72,6 +72,7 @@ func (l *Lexer) advance(p int) {
 	}
 }
 
+// @todo: make this work with runes!
 func (l *Lexer) peek(p int) string {
 	right := l.readPosition + p
 	if right >= len(l.input) {
