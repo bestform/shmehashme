@@ -121,21 +121,21 @@ type equalsChecker struct{}
 func (c equalsChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
 	if l.ch == '=' {
-		if l.position+3 < len(l.input) && l.input[l.position:l.position+3] == "===" {
+		if l.peek(2) == "==" {
 			tok.Type = IDENTITY
 			tok.Literal = "==="
 			l.advance(3)
 
 			return tok, true
 		}
-		if l.position+2 < len(l.input) && l.input[l.position:l.position+2] == "==" {
+		if l.peek(1) == "=" {
 			tok.Type = EQUALS
 			tok.Literal = "=="
 			l.advance(2)
 
 			return tok, true
 		}
-		if l.position+2 < len(l.input) && l.input[l.position:l.position+2] == "=>" {
+		if l.peek(1) == ">" {
 			tok.Type = DOUBLEARROW
 			tok.Literal = "=>"
 			l.advance(2)
@@ -210,10 +210,11 @@ type phptagChecker struct{}
 
 func (p phptagChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
-	if l.position+5 > len(l.input) {
+	if l.ch != '<' {
 		return tok, false
 	}
-	if l.input[l.position:l.position+5] == "<?php" {
+
+	if l.peek(4) == "?php" {
 		tok.Type = PHPTAG
 		tok.Literal = "<?php"
 		for range tok.Literal {
@@ -230,13 +231,13 @@ type compareChecker struct{}
 func (c compareChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
 	if l.ch == '<' {
-		if l.input[l.position+1:l.position+3] == "=>" {
+		if l.peek(2) == "=>" {
 			tok.Type = SPACESHIP
 			tok.Literal = "<=>"
 			l.advance(3)
 			return tok, true
 		}
-		if (l.input[l.position+1]) == '=' {
+		if l.peek(1) == "=" {
 			tok.Type = LESSTHANOREQUAL
 			tok.Literal = "<="
 			l.advance(2)

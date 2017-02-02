@@ -72,6 +72,15 @@ func (l *Lexer) advance(p int) {
 	}
 }
 
+func (l *Lexer) peek(p int) string {
+	right := l.readPosition + p
+	if right >= len(l.input) {
+		return l.input[l.readPosition:]
+	}
+
+	return l.input[l.readPosition:right]
+}
+
 func (l *Lexer) scan(c []rune) {
 	for !runeInSlice(l.ch, c) {
 		l.readChar()
