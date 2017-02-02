@@ -1,5 +1,7 @@
 package lexer
 
+import "fmt"
+
 // TokenType defines the type of a Token (see below)
 type TokenType string
 
@@ -171,4 +173,8 @@ func LookupIdent(ident string) TokenType {
 	}
 
 	return IDENT
+}
+
+func (t Token) String() string {
+	return fmt.Sprintf("%s: %s", t.Type, t.Literal)
 }
