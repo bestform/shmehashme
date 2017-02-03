@@ -2,6 +2,7 @@ package lexer
 
 import (
 	"regexp"
+	"unicode/utf8"
 )
 
 // checker receives a pointer to a lexer and tries to
@@ -42,8 +43,11 @@ func (d delimiterChecker) Check(l *Lexer) (Token, bool) {
 		l.readChar()
 		return newToken(RSQUAREBRACKET, c, l.line), true
 	case '.':
-		l.readChar()
-		return newToken(DOT, c, l.line), true
+		nextRune, _ := utf8.DecodeRuneInString(l.peek(1))
+		if !isInt(nextRune) {
+			l.readChar()
+			return newToken(DOT, c, l.line), true
+		}
 	case '&':
 		if l.input[l.readPosition] != '&' {
 			l.readChar()
@@ -154,22 +158,30 @@ type numberChecker struct{}
 
 func (c numberChecker) Check(l *Lexer) (Token, bool) {
 	tok := Token{}
-	if c.isInt(l.ch) {
-		tok.Type = INT
-		tok.Literal = c.readInteger(l)
+	if isInt(l.ch) || l.ch == '.' {
+		number := c.readInteger(l)
+		var t TokenType
+		t = INT
+		if string(l.ch) == "." {
+			l.readChar()
+			t = FLOAT
+			number = number + "." + c.readInteger(l)
+		}
+		tok.Type = t
+		tok.Literal = number
 		return tok, true
 	}
 
 	return tok, false
 }
 
-func (c numberChecker) isInt(b rune) bool {
+func isInt(b rune) bool {
 	return b >= '0' && b <= '9'
 }
 
 func (c numberChecker) readInteger(l *Lexer) string {
 	position := l.position
-	for c.isInt(l.ch) {
+	for isInt(l.ch) {
 		l.readChar()
 	}
 

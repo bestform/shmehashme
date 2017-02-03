@@ -33,9 +33,9 @@ var tests = []testsetup{
 		testcases: []testcase{
 			{PHPTAG, "<?php"},
 
-			{INT, "1"},
+			{FLOAT, "1.1"},
 			{PLUS, "+"},
-			{INT, "2"},
+			{FLOAT, ".2"},
 			{MINUS, "-"},
 			{INT, "3"},
 			{MULTIPLY, "*"},

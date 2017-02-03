@@ -32,6 +32,8 @@ const (
 	VAR = "VAR"
 	// INT is an integer
 	INT = "INT" // 123456
+	// FLOAT is a floating point number
+	FLOAT = "FLOAT" // 1.1
 
 	// Operators
 
