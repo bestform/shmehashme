@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"io"
 	"unicode/utf8"
+    "bytes"
 )
 
 // Lexer can lex PHP source code into tokens
@@ -72,14 +73,21 @@ func (l *Lexer) advance(p int) {
 	}
 }
 
-// @todo: make this work with runes!
 func (l *Lexer) peek(p int) string {
-	right := l.readPosition + p
-	if right >= len(l.input) {
-		return l.input[l.readPosition:]
-	}
 
-	return l.input[l.readPosition:right]
+	var b = bytes.Buffer{}
+    var readPosition = l.readPosition
+
+    for i := 0; i < p; i++ {
+        if readPosition >= len(l.input) {
+            break
+        }
+        ch, chsize := utf8.DecodeRuneInString(l.input[readPosition:])
+        b.WriteRune(ch)
+        readPosition += chsize
+    }
+
+    return b.String()
 }
 
 func (l *Lexer) scan(c []rune) {
