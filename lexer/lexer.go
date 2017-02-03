@@ -2,9 +2,9 @@ package lexer
 
 import (
 	"bufio"
+	"bytes"
 	"io"
 	"unicode/utf8"
-    "bytes"
 )
 
 // Lexer can lex PHP source code into tokens
@@ -76,18 +76,18 @@ func (l *Lexer) advance(p int) {
 func (l *Lexer) peek(p int) string {
 
 	var b = bytes.Buffer{}
-    var readPosition = l.readPosition
+	var readPosition = l.readPosition
 
-    for i := 0; i < p; i++ {
-        if readPosition >= len(l.input) {
-            break
-        }
-        ch, chsize := utf8.DecodeRuneInString(l.input[readPosition:])
-        b.WriteRune(ch)
-        readPosition += chsize
-    }
+	for i := 0; i < p; i++ {
+		if readPosition >= len(l.input) {
+			break
+		}
+		ch, chsize := utf8.DecodeRuneInString(l.input[readPosition:])
+		b.WriteRune(ch)
+		readPosition += chsize
+	}
 
-    return b.String()
+	return b.String()
 }
 
 func (l *Lexer) scan(c []rune) {

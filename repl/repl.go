@@ -3,9 +3,10 @@ package repl
 import (
 	"bufio"
 	"fmt"
-	"github.com/bestform/shmehashme/lexer"
 	"io"
 	"strings"
+
+	"github.com/bestform/shmehashme/lexer"
 )
 
 const prompt = ">> "
